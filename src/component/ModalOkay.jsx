@@ -11,15 +11,21 @@ export default function ModalOkay({ modalWarn, setModalWarn }) {
       bottom: 0,
       backgroundColor: 'rgba(255, 255, 255, 0.45)',
       zIndex: 10,
+      display:'flex',
+      justifyContent:'center',
+      alignItems:'center',
     },
     content: {
+      position:'relative',
+      inset:'0',
+      width:'80%',
+      top:'30%',
+      left:'10%',
       display: 'flex',
       flexWrap: 'wrap',
-      justifyContent:'center',
+      justifyContent: 'center',
       background: 'lightcyan',
       overflow: 'auto',
-      top:'35vh',
-      bottom:'40vh',
       WebkitOverflowScrolling: 'touch',
       borderRadius: '14px',
       outline: '1px solid',
@@ -30,7 +36,7 @@ export default function ModalOkay({ modalWarn, setModalWarn }) {
     width:'100%',
     textAlign: 'center',
     fontSize: '1.5em',
-    height:'50%'
+    marginBottom:'20px'
   };
   const btn_box = {
     display:'flex',
@@ -39,7 +45,7 @@ export default function ModalOkay({ modalWarn, setModalWarn }) {
   };
   const btn_style = {
     fontSize: '1.5em',
-    padding: '2% 6%',
+    padding: '0px 10px',
   };
 
   return (
