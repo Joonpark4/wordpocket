@@ -48,7 +48,7 @@ div{
 .top_option #tb_List{
   width: 30vw;
 }
-.top_option #btn_ListAdd{
+.top_option .btn_Wordset{
   width: 20vw;
 }
 
@@ -107,7 +107,7 @@ div{
 .section{
   height: 72%;
   width: 100vw;
-  overflow: auto;
+  overflow-y: scroll;
 }
 
 .bottom_option{
@@ -210,7 +210,7 @@ div{
 }
 
 @media screen and (max-width:421px){
-  .top_option #btn_ListAdd{
+  .top_option .btn_Wordset{
     font-size: calc(3vw);
   }
 }
