@@ -99,6 +99,10 @@ div{
   border-right: 3px solid gray;
 }
 
+.list_hiding{
+  color: white;
+}
+
 .selected{
   color: white;
   background-color: rgb(56, 95, 132);

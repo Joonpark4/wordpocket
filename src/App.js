@@ -43,9 +43,15 @@ function App() {
   // 미리 저장된 default_words를 가져다 씁니다.
   // 리스트 정렬과 리렌더 관련 코드는 List.jsx에 있고, 리스트 내 단어 생성 관련 코드는 ModalAddWords.jsx에 있습니다.
   const [words, setWords] = useState(() => {
-    let storedWords = localStorage.getItem(listSelect);
+    let storedWords = localStorage.getItem('Default Wordset');
     return storedWords ? JSON.parse(storedWords) : default_words;
   });
+
+  // 단어 숨김 토글
+  const [isHiding, setIsHiding] = useState(false);
+
+  // 단어 좌우 변경 토글
+  const [isOpposit, setIsOpposit] = useState(false);
 
   // 탭에 따른 섹션 내용 변경
   let section;
@@ -59,6 +65,8 @@ function App() {
         setModalUpdateWords={setModalUpdateWords}
         setUpdateId={setUpdateId}
         setModalDeleteWords={setModalDeleteWords}
+        isHiding={isHiding}
+        isOpposit={isOpposit}
       />
     );
   } else if (tap === 'Test') {
@@ -69,6 +77,8 @@ function App() {
 
   // 기능 경고 모달
   const [modalWarn, setModalWarn] = useState(false);
+  // 기능 경고 종류
+  const [warnFunc, setWarnFunc] = useState('');
 
   // 단어 생성 모달
   const [modalAddWords, setModalAddWords] = useState(false);
@@ -95,7 +105,6 @@ function App() {
   useEffect(() => {
     localStorage.setItem('Wordset', JSON.stringify(options));
   }, [options]);
-  
 
   return (
     <div className="App">
@@ -122,33 +131,43 @@ function App() {
             ))}
           </select>
           <button
-            className='btn_Wordset'
+            className="btn_Wordset"
             id="btn_ListAdd"
             onClick={(e) => {
               e.preventDefault();
-              setIsAddWordset(true)
+              setIsAddWordset(true);
               setModalWordsetAddMod(true);
             }}
           >
             Add List
           </button>
           <button
-            className='btn_Wordset'
+            className="btn_Wordset"
             id="btn_ListMod"
             onClick={(e) => {
               e.preventDefault();
-              setIsAddWordset(false)
-              setModalWordsetAddMod(true);
+              if (listSelect !== 'Default Wordset') {
+                setIsAddWordset(false);
+                setModalWordsetAddMod(true);
+              } else {
+                setWarnFunc('MOD_DEFAULT');
+                setModalWarn(true);
+              }
             }}
           >
             Mod List
           </button>
           <button
-            className='btn_Wordset'
+            className="btn_Wordset"
             id="btn_ListDel"
             onClick={(e) => {
               e.preventDefault();
-              setModalWordsetDelete(true);
+              if (listSelect !== 'Default Wordset') {
+                setModalWordsetDelete(true);
+              } else {
+                setWarnFunc('DEL_DEFAULT');
+                setModalWarn(true);
+              }
             }}
           >
             Del List
@@ -162,12 +181,22 @@ function App() {
       {/* 하단옵션바 */}
       <div className="bottom_option">
         <div>
-          <div className="btn_option list_option">
+          <div
+            className="btn_option list_option"
+            onClick={() => setIsHiding(!isHiding)}
+          >
             Hide
             <br />
-            Words
+            Meaning
           </div>
-          <div className="btn_option list_option">Opposite</div>
+          <div
+            className="btn_option list_option"
+            onClick={() => {
+              setIsOpposit(!isOpposit);
+            }}
+          >
+            Opposite
+          </div>
           <div
             className="btn_option list_option"
             onClick={() => setModalAddWords(true)}
@@ -178,9 +207,12 @@ function App() {
           </div>
           <div
             className="btn_option list_option"
-            onClick={() => setModalWarn(true)}
+            onClick={() => {
+              setWarnFunc('NOT_WORKING');
+              setModalWarn(true);
+            }}
           >
-            Delete
+            Update
             <br />
             List
           </div>
@@ -215,7 +247,11 @@ function App() {
         </div>
       </div>
 
-      <ModalOkay modalWarn={modalWarn} setModalWarn={setModalWarn} />
+      <ModalOkay
+        modalWarn={modalWarn}
+        setModalWarn={setModalWarn}
+        warnFunc={warnFunc}
+      />
       <ModalAddWords
         words={words}
         setWords={setWords}
@@ -237,6 +273,8 @@ function App() {
         updateId={updateId}
       />
       <ModalWordsetAddMod
+        words={words}
+        setWords={setWords}
         modalWordsetAddMod={modalWordsetAddMod}
         setModalWordsetAddMod={setModalWordsetAddMod}
         options={options}
@@ -247,10 +285,12 @@ function App() {
         setListSelect={setListSelect}
         isAddWordset={isAddWordset}
         editIndex={editIndex}
+        setWarnFunc={setWarnFunc}
+        setModalWarn={setModalWarn}
+        setEditIndex={setEditIndex}
       />
       <ModalWordsetDelete
         listSelect={listSelect}
-        setModalWarn={setModalWarn}
         modalWordsetDelete={modalWordsetDelete}
         setModalWordsetDelete={setModalWordsetDelete}
         options={options}

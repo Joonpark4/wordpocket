@@ -2,7 +2,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 
-export default function ModalOkay({ modalWarn, setModalWarn }) {
+export default function ModalOkay({ modalWarn, setModalWarn, warnFunc }) {
   const style = {
     overlay: {
       position: 'fixed',
@@ -12,16 +12,16 @@ export default function ModalOkay({ modalWarn, setModalWarn }) {
       bottom: 0,
       backgroundColor: 'rgba(255, 255, 255, 0.45)',
       zIndex: 10,
-      display:'flex',
-      justifyContent:'center',
-      alignItems:'center',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     content: {
-      position:'relative',
-      inset:'0',
-      width:'80%',
-      top:'30%',
-      left:'10%',
+      position: 'relative',
+      inset: '0',
+      width: '80%',
+      top: '30%',
+      left: '10%',
       display: 'flex',
       flexWrap: 'wrap',
       justifyContent: 'center',
@@ -34,20 +34,34 @@ export default function ModalOkay({ modalWarn, setModalWarn }) {
     },
   };
   const text = {
-    width:'100%',
+    width: '100%',
     textAlign: 'center',
     fontSize: '1.5em',
-    marginBottom:'20px'
+    marginBottom: '20px',
   };
   const btn_box = {
-    display:'flex',
-    width:'100%',
-    justifyContent:'center',
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'center',
   };
   const btn_style = {
     fontSize: '1.5em',
     padding: '0px 10px',
   };
+  let warnText;
+  switch (warnFunc) {
+    case 'NOT_WORKING':
+      warnText = "Sorry, It's not working now";
+      break;
+    case 'DEL_DEFAULT':
+      warnText = "<Default Wordset> cannot be deleted";
+      break;
+    case 'MOD_DEFAULT':
+      warnText = "<Default Wordset> cannot be modified";
+      break;
+    default:
+      break;
+  }
 
   return (
     <Modal
@@ -55,7 +69,7 @@ export default function ModalOkay({ modalWarn, setModalWarn }) {
       onRequestClose={() => setModalWarn(false)}
       style={style}
     >
-      <div style={text}>Sorry, It's not working now</div>
+      <div style={text}>{warnText}</div>
       <div style={btn_box}>
         <button style={btn_style} onClick={() => setModalWarn(false)}>
           Got it!

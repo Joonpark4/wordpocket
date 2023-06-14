@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 
 export default function ModalWordsetAddMod({
+  words,
   modalWordsetAddMod,
   setModalWordsetAddMod,
   options,
@@ -13,6 +14,9 @@ export default function ModalWordsetAddMod({
   setListSelect,
   isAddWordset,
   editIndex,
+  setWarnFunc,
+  setModalWarn,
+  setEditIndex,
 }) {
   const style = {
     overlay: {
@@ -70,15 +74,19 @@ export default function ModalWordsetAddMod({
     padding: '0px 10px',
   };
 
+  // useEffect(() => {
+  //   console.log(words);
+  //   localStorage.setItem(listSelect, JSON.stringify(words));
+  // });
+
   // 수정될 이름
   const [modName, setModName] = useState(listSelect);
-  useEffect(()=>{
-    setModName(listSelect)
-  },[listSelect])
+  useEffect(() => {
+    setModName(listSelect);
+  }, [listSelect]);
 
   // 워드셋
-  const clickWordsetAddMod = (e) => {
-    e.preventDefault(); // 기본동작버튼을 없애고
+  const clickWordsetAddMod = () => {
     if (isAddWordset) {
       // 만약 텍스트박스에 공백이 없을 경우
       if (wordsetName !== '') {
@@ -86,18 +94,21 @@ export default function ModalWordsetAddMod({
         setListSelect(wordsetName);
         setWordsetName('');
         setModalWordsetAddMod(false);
+        setEditIndex(options.indexOf(wordsetName));
       } else {
         alert("You can't make a wordset with blank");
       }
     } else {
       if (listSelect !== 'Default Wordset') {
+        // 새로운 이름으로 다시 리스트 만들어 넣기
+        localStorage.setItem(modName, JSON.stringify(words));
+        // 예전 이름을 가진 리스트는 삭제하기
+        localStorage.removeItem(listSelect);
         const newOptions = [...options];
         newOptions[editIndex] = modName;
         setOptions(newOptions);
         setListSelect(modName);
         setModalWordsetAddMod(false);
-      } else {
-        alert("You can't modification Default Wordset");
       }
     }
   };
