@@ -90,6 +90,19 @@ export default function ModalWordsetAddMod({
     if (isAddWordset) {
       // 만약 텍스트박스에 공백이 없을 경우
       if (wordsetName !== '') {
+        // 기존 워드셋의 개수만큼 for문 반복 실행
+        for (let i = 0; i < options.length; i++) {
+          // 만약 새로 만드려는 워드셋 이름이 기존워드셋과 동일한 경우 
+          if (wordsetName == options[i]) {
+            // 새 워드셋 생성 불가 경고 모달창을 내보내고
+            setWarnFunc("ADD_FAILE");
+            setModalWarn(true);
+            // 워드셋 모달창을 닫고 끝냄
+            setWordsetName('');
+            setModalWordsetAddMod(false);
+            return;
+          }
+        }
         setOptions([...options, wordsetName]);
         setListSelect(wordsetName);
         setWordsetName('');

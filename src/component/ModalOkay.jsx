@@ -54,10 +54,13 @@ export default function ModalOkay({ modalWarn, setModalWarn, warnFunc }) {
       warnText = "Sorry, It's not working now";
       break;
     case 'DEL_DEFAULT':
-      warnText = "<Default Wordset> cannot be deleted";
+      warnText = '<Default Wordset> cannot be deleted';
       break;
     case 'MOD_DEFAULT':
-      warnText = "<Default Wordset> cannot be modified";
+      warnText = '<Default Wordset> cannot be modified';
+      break;
+    case 'ADD_FAILE':
+      warnText = 'Cannot make with that name of Wordset';
       break;
     default:
       break;

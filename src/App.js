@@ -8,6 +8,7 @@ import ModalUpdateWords from './component/ModalUpdateWords';
 import ModalDeleteWords from './component/ModalDeleteWords';
 import ModalWordsetAddMod from './component/ModalWordsetAddMod';
 import ModalWordsetDelete from './component/ModalWordsetDelete';
+import imgPocket from './component/pocket.png'
 
 function App() {
   // 단어 수정, 삭제 모달
@@ -52,6 +53,11 @@ function App() {
 
   // 단어 좌우 변경 토글
   const [isOpposit, setIsOpposit] = useState(false);
+
+  // 탭에 따른 상단 옵션바 내용 변경
+  let top_option;
+  if (tap === 'List') {
+  }
 
   // 탭에 따른 섹션 내용 변경
   let section;
@@ -232,15 +238,17 @@ function App() {
         <div
           className="btn"
           onClick={() => {
-            setTap('Test');
+            setWarnFunc('NOT_WORKING');
+            setModalWarn(true);
           }}
         >
-          Test
+        <img src={imgPocket} style={{width:50, height:50}}/>
         </div>
         <div
           className="btn"
           onClick={() => {
-            setTap('Online');
+            setWarnFunc('NOT_WORKING');
+            setModalWarn(true);
           }}
         >
           Online
