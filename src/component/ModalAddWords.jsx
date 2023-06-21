@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { modalWarnToggle } from './Redux/SliceModalWarn';
 import { warnFuncChange } from './Redux/SliceWarnFunc';
 import { wordsChange } from './Redux/SliceWords';
+import { modalWordAddToggle } from './Redux/SliceModalWordAdd';
 
-export default function ModalAddWords({ modalAddWords, setModalAddWords}) {
+export default function ModalAddWords() {
 
   // 리덕스 툴킷 리모콘 사용
   const dispatch = useDispatch();
@@ -14,6 +15,11 @@ export default function ModalAddWords({ modalAddWords, setModalAddWords}) {
   // 리덕스 툴킷 사용 (워드 리스트, 이전 이름 words)
   const wordsR = useSelector((state) => {
     return state.wordsR.value;
+  });
+  
+  // 리덕스 툴킷 사용 (단어추가 모달, 이전 이름 modalAddWord)
+  const modalWordAdd = useSelector((state) => {
+    return state.modalWordAdd.value;
   });
 
   const [id, setId] = useState(wordsR.length);
@@ -89,18 +95,18 @@ export default function ModalAddWords({ modalAddWords, setModalAddWords}) {
       setId(id+1);
       setAddLeft(''); // 텍스트박스 비우기
       setAddRight(''); // 텍스트박스 비우기
-      setModalAddWords(false);
+      dispatch(modalWordAddToggle(false));
     } else {
-      setModalAddWords(false)
-      dispatch(warnFuncChange("ADD_FAILE"))
+      dispatch(modalWordAddToggle(false));
+      dispatch(warnFuncChange("WORD_ADD_BLANK"))
       dispatch(modalWarnToggle(true))
     }
   }
 
   return (
     <Modal
-      isOpen={modalAddWords}
-      onRequestClose={() => setModalAddWords(false)}
+      isOpen={modalWordAdd}
+      onRequestClose={() => dispatch(modalWordAddToggle(false))}
       style={style}
     >
       <div style={top}>
@@ -111,7 +117,7 @@ export default function ModalAddWords({ modalAddWords, setModalAddWords}) {
           <input style={textbox} placeholder="Meaning" type="text" onChange={(e)=>setAddRight(e.target.value)} value={addRight}/>
         </form>
         <div style={btn_box}>
-          <button style={btn_style} onClick={() => {setModalAddWords(false)}}>
+          <button style={btn_style} onClick={() => {dispatch(modalWordAddToggle(false))}}>
             Cancel
           </button>
           <button style={btn_style} onClick={clickAddWord}>

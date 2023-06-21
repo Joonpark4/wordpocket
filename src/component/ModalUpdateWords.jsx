@@ -3,8 +3,11 @@ import React, { useEffect, useState, useRef } from 'react';
 import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { wordsChange } from './Redux/SliceWords';
+import { modalWarnToggle } from './Redux/SliceModalWarn';
+import { warnFuncChange } from './Redux/SliceWarnFunc';
+import { modalWordModToggle } from './Redux/SliceModalWordMod';
 
-export default function ModalUpdateWords({ modalUpdateWords, setModalUpdateWords,updateId}) {
+export default function ModalUpdateWords({}) {
 
   // 리덕스 툴킷 리모콘 사용
   const dispatch = useDispatch();
@@ -13,6 +16,16 @@ export default function ModalUpdateWords({ modalUpdateWords, setModalUpdateWords
   const wordsR = useSelector((state) => {
     return state.wordsR.value;
   });
+
+  // 리덕스 툴킷 사용 (단어수정 모달, 이전 이름 modalUpdateWord)
+  const modalWordMod = useSelector((state) => {
+    return state.modalWordMod.value;
+  });
+
+  // 리덕스 툴킷 사용 (업뎃 인덱스, 이전이름 updateId)
+  const updateId = useSelector((state)=>{
+   return state.updateId.value;
+  })
 
   const [updateLeft, setUpdateLeft] = useState("");
   const [updateRight, setUpdateRight] = useState("");
@@ -28,7 +41,7 @@ export default function ModalUpdateWords({ modalUpdateWords, setModalUpdateWords
       setUpdateLeft(wordsR[updateId-1].left);
       setUpdateRight(wordsR[updateId-1].right);
     }
-  },[modalUpdateWords])
+  },[modalWordMod])
 
   const style = {
     overlay: {
@@ -99,23 +112,22 @@ export default function ModalUpdateWords({ modalUpdateWords, setModalUpdateWords
         }
         return word;
       });
-      // setWords(updatedWords);
       dispatch(wordsChange(updatedWords));
-      // 어차피 setWords하면 자동으로 리스트에서 사라지기 때문에 굳이 다시 로컬스토리지를 업데이트 해주지 않아도 된다.
-      // localStorage.setItem(listSelect, JSON.stringify(updatedWords));
       setUpdateLeft('');
       setUpdateRight('');
-      setModalUpdateWords(false);
+      dispatch(modalWordModToggle(false))
     } else {
-      alert("You can't make a word with blank");
+      dispatch(modalWordModToggle(false))
+      dispatch(warnFuncChange("WORD_MOD_BLANK"))
+      dispatch(modalWarnToggle(true))
     }
   }
 
 
   return (
     <Modal
-      isOpen={modalUpdateWords}
-      onRequestClose={() => setModalUpdateWords(false)}
+      isOpen={modalWordMod}
+      onRequestClose={() => dispatch(modalWordModToggle(false))}
       style={style}
     >
       <div style={top}>
@@ -126,9 +138,7 @@ export default function ModalUpdateWords({ modalUpdateWords, setModalUpdateWords
           <input style={textbox} placeholder="Meaning" type="text" onChange={(e)=>setUpdateRight(e.target.value)} value={updateRight}/>
         </form>
         <div style={btn_box}>
-          <button style={btn_style} onClick={() => {setModalUpdateWords(false);
-      setUpdateLeft(wordsR[updateId-1].left);
-      setUpdateRight(wordsR[updateId-1].right);}}>
+          <button style={btn_style} onClick={() => {dispatch(modalWordModToggle(false))}}>
             Cancel
           </button>
           <button style={btn_style} onClick={clickUpdateWord}>

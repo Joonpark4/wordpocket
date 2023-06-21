@@ -3,11 +3,11 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { wordsChange } from './Redux/SliceWords';
+import { modalWordModToggle } from './Redux/SliceModalWordMod';
+import { modalWordDelToggle } from './Redux/SliceModalWordDel';
+import { updateIdChange } from './Redux/SliceUpdateId';
 
 function List({
-  setModalUpdateWords,
-  setUpdateId,
-  setModalDeleteWords,
   isHiding,
   isOpposit,
 }) {
@@ -22,7 +22,6 @@ function List({
    const wordsR = useSelector((state) => {
      return state.wordsR.value;
    });
-  console.log(wordsR);
 
   // 현재 선택된 리스트 wordsetSelect의 내용이 변경될 때 setWords의 상태를 변경시켜 줍니다.
   useEffect(() => {
@@ -79,7 +78,7 @@ function List({
       }
     });
     // id 값을 상위컴포넌트, 최종적으로는 ModalUpdate와 ModalDelete에 전달하기 위함
-    setUpdateId(id);
+    dispatch(updateIdChange(id))
   };
 
   // 선택된 항목 바깥 클릭 시 선택 해제
@@ -105,13 +104,6 @@ function List({
       document.removeEventListener('click', handleOuterClick);
     };
   }, []);
-
-  const handleUpdate = () => {
-    setModalUpdateWords(true);
-  };
-  const handleDelete = () => {
-    setModalDeleteWords(true);
-  };
 
   const hidingClass = ['list_right', isHiding ? 'list_hiding' : null]
     .filter(Boolean)
@@ -145,10 +137,10 @@ function List({
                   className="list_bottom"
                   onClick={(event) => event.stopPropagation()}
                 >
-                  <button className="btn_list" onClick={handleUpdate}>
+                  <button className="btn_list" onClick={()=>dispatch(modalWordModToggle(true))}>
                     Update
                   </button>
-                  <button className="btn_list" onClick={handleDelete}>
+                  <button className="btn_list" onClick={()=>dispatch(modalWordDelToggle(true))}>
                     Delete
                   </button>
                 </div>

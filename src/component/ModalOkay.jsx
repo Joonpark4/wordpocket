@@ -78,11 +78,14 @@ export default function ModalOkay() {
       warnText = 'Cannot make with that name of Wordset';
       break;
     case 'WORD_ADD_BLANK':
-      warnText = "You can't make a word with blank";
+      warnText = "Cannot be made to an empty word";
       break;
     case 'WORDSET_ADD_BLANK':
-      warnText = "You can't make a wordset with blank";
+      warnText = "Cannot make a wordset with blank";
       break;
+      case 'WORD_MOD_BLANK':
+        warnText = "Cannot be modified to an empty word";
+        break;
     default:
       break;
   }

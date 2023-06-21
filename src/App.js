@@ -8,18 +8,16 @@ import ModalUpdateWords from './component/ModalUpdateWords';
 import ModalDeleteWords from './component/ModalDeleteWords';
 import ModalWordsetAddMod from './component/ModalWordsetAddMod';
 import ModalWordsetDelete from './component/ModalWordsetDelete';
-// import imgPocket from './component/pocket.png'
 import { useDispatch, useSelector } from 'react-redux';
 import { wordsetSelectChange } from './component/Redux/SliceWordsetSelect';
-import { warnFuncChange } from './component/Redux/SliceWarnFunc'
+import { warnFuncChange } from './component/Redux/SliceWarnFunc';
 import { modalWarnToggle } from './component/Redux/SliceModalWarn';
+import { modalWordAddToggle } from './component/Redux/SliceModalWordAdd';
+import { wordsetIdxChange } from './component/Redux/SliceWordsetIdx';
+import { modalWordsetAMToggle } from './component/Redux/SliceModalWordsetAddMod';
+import { modalWordsetDelToggle } from './component/Redux/SliceModalWordsetDel';
 
 function App() {
-  // 단어 수정, 삭제 모달
-  const [modalUpdateWords, setModalUpdateWords] = useState(false);
-  const [modalDeleteWords, setModalDeleteWords] = useState(false);
-  const [updateId, setUpdateId] = useState(0);
-
   // 탭 선택
   const [tap, setTap] = useState('List');
 
@@ -58,10 +56,6 @@ function App() {
   if (tap === 'List') {
     section = (
       <List
-        modalUpdateWords={modalUpdateWords}
-        setModalUpdateWords={setModalUpdateWords}
-        setUpdateId={setUpdateId}
-        setModalDeleteWords={setModalDeleteWords}
         isHiding={isHiding}
         isOpposit={isOpposit}
       />
@@ -72,25 +66,34 @@ function App() {
     section = <div className="warning">Online 탭은 준비중입니다.</div>;
   }
 
-  // 단어 생성 모달
-  const [modalAddWords, setModalAddWords] = useState(false);
-
-  // 리스트 생성 수정 모달
-  const [modalWordsetAddMod, setModalWordsetAddMod] = useState(false);
-
-  // wordset을 삭제 때 사용하는 모달
-  const [modalWordsetDelete, setModalWordsetDelete] = useState(false)
-
   // 이름을 지을건지 수정할건지 체크
   const [isAddWordset, setIsAddWordset] = useState(true);
- 
-  // 워드셋 드롭다운 메뉴의 인덱스를 확인
-  const [editIndex, setEditIndex] = useState(-1);
 
   // options(워드셋)이 변경될 때마다 로컬스토리지에 'Wordset'이름으로 배열을 저장
   useEffect(() => {
     localStorage.setItem('Wordset', JSON.stringify(wordsetLists));
   }, [wordsetLists]);
+
+  // 아래는 주소창을 삭제시켜줍니다.
+  useEffect(() => {
+    window.addEventListener(
+      'load',
+      function () {
+        setTimeout(scrollTo, 0, 0, 1);
+      },
+      false
+    );
+
+    return () => {
+      window.removeEventListener(
+        'load',
+        function () {
+          setTimeout(scrollTo, 0, 0, 1);
+        },
+        false
+      );
+    };
+  }, []);
 
   return (
     <div className="App">
@@ -106,7 +109,7 @@ function App() {
             id="listname"
             onChange={(e) => {
               dispatch(wordsetSelectChange(e.target.value));
-              setEditIndex(wordsetLists.indexOf(e.target.value));
+              dispatch(wordsetIdxChange(wordsetLists.indexOf(e.target.value)));
             }}
             value={wordsetSelect}
           >
@@ -122,7 +125,7 @@ function App() {
             onClick={(e) => {
               e.preventDefault();
               setIsAddWordset(true);
-              setModalWordsetAddMod(true);
+              dispatch(modalWordsetAMToggle(true));
             }}
           >
             Add List
@@ -134,10 +137,10 @@ function App() {
               e.preventDefault();
               if (wordsetSelect !== 'Default Wordset') {
                 setIsAddWordset(false);
-                setModalWordsetAddMod(true);
+                dispatch(modalWordsetAMToggle(true));
               } else {
                 dispatch(warnFuncChange('MOD_DEFAULT'));
-                dispatch(modalWarnToggle(true))
+                dispatch(modalWarnToggle(true));
               }
             }}
           >
@@ -149,10 +152,10 @@ function App() {
             onClick={(e) => {
               e.preventDefault();
               if (wordsetSelect !== 'Default Wordset') {
-                setModalWordsetDelete(true);
+                dispatch(modalWordsetDelToggle(true));
               } else {
                 dispatch(warnFuncChange('DEL_DEFAULT'));
-                dispatch(modalWarnToggle(true))
+                dispatch(modalWarnToggle(true));
               }
             }}
           >
@@ -182,7 +185,7 @@ function App() {
           </div>
           <div
             className="btn_option list_option"
-            onClick={() => setModalAddWords(true)}
+            onClick={() => dispatch(modalWordAddToggle(true))}
           >
             Add
             <br />
@@ -192,7 +195,7 @@ function App() {
             className="btn_option list_option"
             onClick={() => {
               dispatch(warnFuncChange('NOT_WORKING'));
-              dispatch(modalWarnToggle(true))
+              dispatch(modalWarnToggle(true));
             }}
           >
             Update
@@ -216,51 +219,28 @@ function App() {
           className="btn"
           onClick={() => {
             dispatch(warnFuncChange('NOT_WORKING'));
-            dispatch(modalWarnToggle(true))
+            dispatch(modalWarnToggle(true));
           }}
         >
-          {/* <img src={imgPocket} style={{width:50, height:50}}/> */}
           Test
         </div>
         <div
           className="btn"
           onClick={() => {
             dispatch(warnFuncChange('NOT_WORKING'));
-            dispatch(modalWarnToggle(true))
+            dispatch(modalWarnToggle(true));
           }}
         >
           Online
         </div>
       </div>
 
-      <ModalOkay/>
-      <ModalAddWords
-        modalAddWords={modalAddWords}
-        setModalAddWords={setModalAddWords}
-      />
-      <ModalUpdateWords
-        modalUpdateWords={modalUpdateWords}
-        setModalUpdateWords={setModalUpdateWords}
-        updateId={updateId}
-      />
-      <ModalDeleteWords
-        modalDeleteWords={modalDeleteWords}
-        setModalDeleteWords={setModalDeleteWords}
-        updateId={updateId}
-      />
-      <ModalWordsetAddMod
-        modalWordsetAddMod={modalWordsetAddMod}
-        setModalWordsetAddMod={setModalWordsetAddMod}
-        isAddWordset={isAddWordset}
-        editIndex={editIndex}
-        setEditIndex={setEditIndex}
-      />
-      <ModalWordsetDelete
-        modalWordsetDelete={modalWordsetDelete}
-        setModalWordsetDelete={setModalWordsetDelete}
-        editIndex={editIndex}
-        setEditIndex={setEditIndex}
-      />
+      <ModalOkay />
+      <ModalAddWords />
+      <ModalUpdateWords/>
+      <ModalDeleteWords/>
+      <ModalWordsetAddMod isAddWordset={isAddWordset} />
+      <ModalWordsetDelete />
     </div>
   );
 }

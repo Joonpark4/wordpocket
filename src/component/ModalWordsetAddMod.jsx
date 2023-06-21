@@ -6,14 +6,10 @@ import { wordsetSelectChange } from './Redux/SliceWordsetSelect';
 import { wordsetListChange } from './Redux/SliceWordsetList';
 import { modalWarnToggle } from './Redux/SliceModalWarn';
 import { warnFuncChange } from './Redux/SliceWarnFunc';
+import { wordsetIdxChange } from './Redux/SliceWordsetIdx';
+import { modalWordsetAMToggle } from './Redux/SliceModalWordsetAddMod';
 
-export default function ModalWordsetAddMod({
-  modalWordsetAddMod,
-  setModalWordsetAddMod,
-  isAddWordset,
-  editIndex,
-  setEditIndex,
-}) {
+export default function ModalWordsetAddMod({ isAddWordset }) {
   // 리덕스 툴킷 사용 (리모콘)
   const dispatch = useDispatch();
 
@@ -26,10 +22,20 @@ export default function ModalWordsetAddMod({
   const wordsetLists = useSelector((state) => {
     return state.wordsetList.value;
   });
-  
+
   // 리덕스 툴킷 사용 (워드 리스트, 이전 이름 words)
   const wordsR = useSelector((state) => {
     return state.wordsR.value;
+  });
+
+  // 리덕스 툴킷 사용 (워드셋 인덱스체크, 이전 이름 editIdx)
+  const wordsetIdx = useSelector((state) => {
+    return state.wordsetIdx.value;
+  });
+
+  // 리덕스 툴킷 사용 (워드셋 추가 수정 모달, 이전 이름 modalWordsetAddMod)
+  const modalWordsetAM = useSelector((state) => {
+    return state.modalWordsetAM.value;
   });
 
   const style = {
@@ -96,11 +102,6 @@ export default function ModalWordsetAddMod({
     setModName(wordsetSelect);
   }, [wordsetSelect]);
 
-  // // 수정될 이름
-  // useEffect(()=>{
-  //   setWordsetName(wordsetName)
-  // },[wordsetSelect])
-
   // 워드셋
   const clickWordsetAddMod = () => {
     if (isAddWordset) {
@@ -117,7 +118,7 @@ export default function ModalWordsetAddMod({
             dispatch(modalWarnToggle(true));
             // 워드셋 모달창을 닫고 끝냄
             setWordsetName('');
-            setModalWordsetAddMod(false);
+            dispatch(modalWordsetAMToggle(false));
             return;
           }
         }
@@ -125,11 +126,10 @@ export default function ModalWordsetAddMod({
         dispatch(wordsetListChange([...wordsetLists, wordsetName]));
         dispatch(wordsetSelectChange(wordsetName));
         setWordsetName('');
-        setModalWordsetAddMod(false);
-        setEditIndex(wordsetLists.indexOf(wordsetName));
+        dispatch(modalWordsetAMToggle(false));
+        dispatch(wordsetIdxChange(wordsetLists.indexOf(wordsetName)));
       } else {
-        // alert("You can't make a wordset with blank");
-        setModalWordsetAddMod(false);
+        dispatch(modalWordsetAMToggle(false));
         dispatch(warnFuncChange('WORDSET_ADD_BLANK'));
         dispatch(modalWarnToggle(true));
       }
@@ -140,16 +140,15 @@ export default function ModalWordsetAddMod({
         // 예전 이름을 가진 리스트는 삭제하기
         localStorage.removeItem(wordsetSelect);
         const newWordsetLists = [...wordsetLists];
-        newWordsetLists[editIndex] = modName;
-        // setOptions(newOptions);
+        newWordsetLists[wordsetIdx] = modName;
         dispatch(wordsetListChange(newWordsetLists));
         dispatch(wordsetSelectChange(modName));
-        setModalWordsetAddMod(false);
+        dispatch(modalWordsetAMToggle(false));
       } else {
         // 변경할 이름이 공백인 경우 텍스트를 다시 이전으로 되돌림
-        setModName(wordsetSelect)
+        setModName(wordsetSelect);
         // 모달을 종료하고 경고문 모달을 다시 출력
-        setModalWordsetAddMod(false);
+        dispatch(modalWordsetAMToggle(false));
         dispatch(warnFuncChange('WORDSET_ADD_BLANK'));
         dispatch(modalWarnToggle(true));
       }
@@ -191,8 +190,8 @@ export default function ModalWordsetAddMod({
 
   return (
     <Modal
-      isOpen={modalWordsetAddMod}
-      onRequestClose={() => setModalWordsetAddMod(false)}
+      isOpen={modalWordsetAM}
+      onRequestClose={() => dispatch(modalWordsetAMToggle(false))}
       style={style}
     >
       <div style={top}>
@@ -202,7 +201,7 @@ export default function ModalWordsetAddMod({
           <button
             style={btn_style}
             onClick={() => {
-              setModalWordsetAddMod(false);
+              dispatch(modalWordsetAMToggle(false));
               setWordsetName('');
             }}
           >
