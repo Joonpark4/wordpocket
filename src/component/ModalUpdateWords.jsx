@@ -90,13 +90,10 @@ export default function ModalUpdateWords({ words, setWords, modalUpdateWords, se
     e.preventDefault(); // 기본동작버튼을 없애고
     // 만약 텍스트박스에 공백이 없을 경우
     if (updateLeft !== '' && updateRight !== '') {
-      // 단어의 양쪽 공백을 삭제, 트림
-      let trimUpdateLeft = updateLeft.trim();
-      let trimUpdateRight = updateRight.trim();
-      // 기존 단어를 수정
+      // // 기존 단어를 수정
       const updatedWords = words.map((word) => {
         if (updateId === word.id) {
-          return { "id":updateId, "left":trimUpdateLeft, "right":trimUpdateRight };
+          return { "id":updateId, "left":updateLeft, "right":updateRight };
         }
         return word;
       });

@@ -1,24 +1,23 @@
 /*eslint-disable*/
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
-import { useDispatch, useSelector } from 'react-redux';
-import { wordsetSelectChange } from './Redux/SliceWordsetSelect';
-import { wordsetListChange } from './Redux/SliceWordsetList';
-import { modalWarnToggle } from './Redux/SliceModalWarn';
-import { warnFuncChange } from './Redux/SliceWarnFunc';
 
 export default function ModalWordsetAddMod({
   words,
   modalWordsetAddMod,
   setModalWordsetAddMod,
+  options,
+  setOptions,
   wordsetName,
   setWordsetName,
+  listSelect,
+  setListSelect,
   isAddWordset,
   editIndex,
+  setWarnFunc,
+  setModalWarn,
   setEditIndex,
 }) {
-  
-
   const style = {
     overlay: {
       position: 'fixed',
@@ -74,75 +73,54 @@ export default function ModalWordsetAddMod({
     fontSize: '1.5em',
     padding: '0px 10px',
   };
-  
-  // 리덕스 툴킷 사용 (리모콘)
-  const dispatch = useDispatch();
 
-  // 리덕스 툴킷 사용 (선택된 워드셋)
-  const wordsetSelect = useSelector((state)=>{
-    return state.wordsetSelect.value;
-   })
-
-  // 리덕스 툴킷 사용 (선택된 워드셋과 변경)
-  const wordsetList = useSelector((state)=>{
-    return state.wordsetList.value;
-   })
+  // useEffect(() => {
+  //   console.log(words);
+  //   localStorage.setItem(listSelect, JSON.stringify(words));
+  // });
 
   // 수정될 이름
-  const [modName, setModName] = useState(wordsetSelect);
+  const [modName, setModName] = useState(listSelect);
   useEffect(() => {
-    setModName(wordsetSelect);
-  }, [wordsetSelect]);
-
-    // 아래 구문이 없을 경우 워드셋 생성 직후 바로 삭제할 때 인덱스가 의도대로 잡히지 않는다.
-    useEffect(()=>{
-      setEditIndex(wordsetList.indexOf(wordsetSelect));
-    }),[modalWordsetAddMod]
+    setModName(listSelect);
+  }, [listSelect]);
 
   // 워드셋
   const clickWordsetAddMod = () => {
-    // 워드셋 더하기의 경우
     if (isAddWordset) {
       // 만약 텍스트박스에 공백이 없을 경우
       if (wordsetName !== '') {
-        // 워드셋의 양쪽 공백을 삭제, 트림
-        let trimWordsetName = wordsetName.trim();
         // 기존 워드셋의 개수만큼 for문 반복 실행
-        for (let i = 0; i < wordsetList.length; i++) {
+        for (let i = 0; i < options.length; i++) {
           // 만약 새로 만드려는 워드셋 이름이 기존워드셋과 동일한 경우 
-          if (wordsetName == wordsetList[i]) {
+          if (wordsetName == options[i]) {
             // 새 워드셋 생성 불가 경고 모달창을 내보내고
-            dispatch(warnFuncChange("ADD_FAILE"))
-            dispatch(modalWarnToggle(true))
+            setWarnFunc("ADD_FAILE");
+            setModalWarn(true);
             // 워드셋 모달창을 닫고 끝냄
             setWordsetName('');
             setModalWordsetAddMod(false);
             return;
           }
         }
-        dispatch(wordsetListChange([...wordsetList, trimWordsetName]))
-        // setOptions([...wordsetList, trimWordsetName]);
-        dispatch(wordsetSelectChange(trimWordsetName))
-        // setOptions([...options, wordsetName]);
-        // setListSelect(wordsetName);
+        setOptions([...options, wordsetName]);
+        setListSelect(wordsetName);
         setWordsetName('');
         setModalWordsetAddMod(false);
+        setEditIndex(options.indexOf(wordsetName));
       } else {
-        dispatch(warnFuncChange("ADD_SAME_WORDSET"))
-        setModalWordsetAddMod(false)
-        dispatch(modalWarnToggle(true))
+        alert("You can't make a wordset with blank");
       }
-      // 워드셋 수정의 경우
     } else {
-      if (wordsetSelect !== 'Default Wordset') {
+      if (listSelect !== 'Default Wordset') {
         // 새로운 이름으로 다시 리스트 만들어 넣기
         localStorage.setItem(modName, JSON.stringify(words));
         // 예전 이름을 가진 리스트는 삭제하기
-        // localStorage.removeItem(wordsetSelect);
-        const newOptions = [...wordsetList];
+        localStorage.removeItem(listSelect);
+        const newOptions = [...options];
         newOptions[editIndex] = modName;
-        dispatch(wordsetListChange(newOptions));
-        dispatch(wordsetSelectChange(modName))
+        setOptions(newOptions);
+        setListSelect(modName);
         setModalWordsetAddMod(false);
       }
     }
