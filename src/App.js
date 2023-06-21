@@ -70,14 +70,6 @@ function App() {
 
   // 단어 좌우 변경 토글
   const [isOpposit, setIsOpposit] = useState(false);
-  let oppositClass = ['btn_option list_option', isOpposit ? 'btn_pushed' : null]
-    .filter(Boolean)
-    .join(' ');
-
-  // 탭에 따른 상단 옵션바 내용 변경
-  let top_option;
-  if (tap === 'List') {
-  }
 
   // 탭에 따른 섹션 내용 변경
   let section;

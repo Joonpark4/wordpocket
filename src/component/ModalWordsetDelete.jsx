@@ -75,9 +75,12 @@ export default function ModalWordsetDelete({
    })
   
   // 아래 구문이 없을 경우 워드셋 생성 직후 바로 삭제할 때 인덱스가 의도대로 잡히지 않는다.
-    useEffect(()=>{
-      setEditIndex(wordsetLists.indexOf(wordsetSelect));
-    },[modalWordsetDelete])
+    // useEffect(()=>{
+    //   setEditIndex(wordsetLists.indexOf(wordsetSelect));
+    // },[modalWordsetDelete])
+  useEffect(()=>{
+    setEditIndex(options.indexOf(listSelect));
+  },[listSelect])
 
   const clickWordsetDelete = () => {
     // editIndex가 아닌 항목들로 구성된 새로운 옵션 배열을 생성합니다.

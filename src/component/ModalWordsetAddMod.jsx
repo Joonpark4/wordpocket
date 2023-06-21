@@ -123,6 +123,8 @@ export default function ModalWordsetAddMod({
         dispatch(wordsetListChange([...wordsetList, trimWordsetName]))
         // setOptions([...wordsetList, trimWordsetName]);
         dispatch(wordsetSelectChange(trimWordsetName))
+        // setOptions([...options, wordsetName]);
+        // setListSelect(wordsetName);
         setWordsetName('');
         setModalWordsetAddMod(false);
       } else {

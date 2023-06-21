@@ -71,13 +71,10 @@ export default function ModalOkay() {
       warnText = "Sorry, It's not working now";
       break;
     case 'DEL_DEFAULT':
-      warnText = '<Default Wordset> cannot be deleted';
+      warnText = "<Default Wordset> cannot be deleted";
       break;
     case 'MOD_DEFAULT':
-      warnText = '<Default Wordset> cannot be modified';
-      break;
-    case 'ADD_FAILE':
-      warnText = 'Cannot make with that name of Wordset';
+      warnText = "<Default Wordset> cannot be modified";
       break;
     case 'ADD_SAME_WORDSET':
       warnText = "You can't make a wordset with blank";
