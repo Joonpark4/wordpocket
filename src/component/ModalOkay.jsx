@@ -1,8 +1,23 @@
 /*eslint-disable*/
 import React from 'react';
 import Modal from 'react-modal';
+import { useDispatch, useSelector } from 'react-redux';
+import { modalWarnToggle } from './Redux/SliceModalWarn';
 
-export default function ModalOkay({ modalWarn, setModalWarn, warnFunc }) {
+export default function ModalOkay() {
+  // 리덕스 툴킷 리모콘 사용
+  const dispatch = useDispatch();
+
+  // 리덕스 툴킷 사용 (경고창 내용, 이전 이름 warnFunc)
+  const warnFunc = useSelector((state) => {
+    return state.warnFunc.value;
+  });
+
+  // 리덕스 툴킷 사용 (경고창 모달, 이전 이름 modalWarn)
+  const modalWarn = useSelector((state) => {
+    return state.modalWarn.value;
+  });
+
   const style = {
     overlay: {
       position: 'fixed',
@@ -54,13 +69,19 @@ export default function ModalOkay({ modalWarn, setModalWarn, warnFunc }) {
       warnText = "Sorry, It's not working now";
       break;
     case 'DEL_DEFAULT':
-      warnText = "<Default Wordset> cannot be deleted";
+      warnText = '<Default Wordset> cannot be deleted';
       break;
     case 'MOD_DEFAULT':
       warnText = '<Default Wordset> cannot be modified';
       break;
     case 'ADD_FAILE':
       warnText = 'Cannot make with that name of Wordset';
+      break;
+    case 'WORD_ADD_BLANK':
+      warnText = "You can't make a word with blank";
+      break;
+    case 'WORDSET_ADD_BLANK':
+      warnText = "You can't make a wordset with blank";
       break;
     default:
       break;
@@ -69,12 +90,15 @@ export default function ModalOkay({ modalWarn, setModalWarn, warnFunc }) {
   return (
     <Modal
       isOpen={modalWarn}
-      onRequestClose={() => setModalWarn(false)}
+      onRequestClose={() => dispatch(modalWarnToggle(false))}
       style={style}
     >
       <div style={text}>{warnText}</div>
       <div style={btn_box}>
-        <button style={btn_style} onClick={() => setModalWarn(false)}>
+        <button
+          style={btn_style}
+          onClick={() => dispatch(modalWarnToggle(false))}
+        >
           Got it!
         </button>
       </div>

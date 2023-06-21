@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const modalSlice = createSlice({
+const modalWarnSlice = createSlice({
   name: 'modalWarn',
   initialState: { value: false },
   reducers: {
@@ -10,5 +10,5 @@ const modalSlice = createSlice({
   },
 });
 
-export default modalSlice;
-export const { modalWarnToggle } = modalSlice.actions;
+export default modalWarnSlice;
+export const { modalWarnToggle } = modalWarnSlice.actions;

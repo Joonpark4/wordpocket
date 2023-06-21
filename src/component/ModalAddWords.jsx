@@ -1,12 +1,17 @@
 /*eslint-disable*/
 import React, { useState } from 'react';
 import Modal from 'react-modal';
+import { useDispatch, useSelector } from 'react-redux';
+import { modalWarnToggle } from './Redux/SliceModalWarn';
+import { warnFuncChange } from './Redux/SliceWarnFunc';
 
 export default function ModalAddWords({ words, setWords, modalAddWords, setModalAddWords}) {
   const [id, setId] = useState(words.length);
   const [addLeft, setAddLeft] = useState("");
   const [addRight, setAddRight] = useState("");
 
+  // 리덕스 툴킷 리모콘 사용
+  const dispatch = useDispatch();
 
   const style = {
     overlay: {
@@ -78,7 +83,9 @@ export default function ModalAddWords({ words, setWords, modalAddWords, setModal
       setAddRight(''); // 텍스트박스 비우기
       setModalAddWords(false);
     } else {
-      alert("You can't make a word with blank");
+      setModalAddWords(false)
+      dispatch(warnFuncChange("ADD_FAILE"))
+      dispatch(modalWarnToggle(true))
     }
   }
 

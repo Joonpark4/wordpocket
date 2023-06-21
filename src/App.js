@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import List from './component/List';
 import ModalOkay from './component/ModalOkay';
@@ -8,7 +8,11 @@ import ModalUpdateWords from './component/ModalUpdateWords';
 import ModalDeleteWords from './component/ModalDeleteWords';
 import ModalWordsetAddMod from './component/ModalWordsetAddMod';
 import ModalWordsetDelete from './component/ModalWordsetDelete';
-import imgPocket from './component/pocket.png'
+// import imgPocket from './component/pocket.png'
+import { useDispatch, useSelector } from 'react-redux';
+import { wordsetSelectChange } from './component/Redux/SliceWordsetSelect';
+import { warnFuncChange } from './component/Redux/SliceWarnFunc'
+import { modalWarnToggle } from './component/Redux/SliceModalWarn';
 
 function App() {
   // 단어 수정, 삭제 모달
@@ -19,8 +23,23 @@ function App() {
   // 탭 선택
   const [tap, setTap] = useState('List');
 
-  // 리스트 선택과 변경
-  const [listSelect, setListSelect] = useState('Default Wordset');
+  /** 리덕스의 사용으로 사라진 코드
+  // // 리스트 선택과 변경
+  // const [listSelect, setListSelect] = useState('Default Wordset');
+  */
+
+  // 리덕스 툴킷 사용 (리모콘)
+  const dispatch = useDispatch();
+
+  // 리덕스 툴킷 사용 (선택된 워드셋과 변경, 이전 이름 listSelect)
+  const wordsetSelect = useSelector((state) => {
+    return state.wordsetSelect.value;
+  });
+
+  // 리덕스 툴킷 사용 (워드셋 리스트, 이전 이름 options)
+  const wordsetLists = useSelector((state) => {
+    return state.wordsetList.value;
+  });
 
   // 먼저 useState로 words를 설정하여 setWords로 값이 변할때마다 리렌더링을 하도록 선언한다.
   // 이 때 storedWords라는 값에 로컬스토리지 words라는 이름의 배열값을 집어넣는데, words라는 이름으로 저장된 배열이 없다면 default_words 즉 기본으로 저장된 값을 storedWords에 저장하도록 한다. 그 후 storedWords는 words의 값이 된다
@@ -50,6 +69,9 @@ function App() {
 
   // 단어 숨김 토글
   const [isHiding, setIsHiding] = useState(false);
+  let hidingClass = ['btn_option list_option', isHiding ? 'btn_pushed' : null]
+    .filter(Boolean)
+    .join(' ');
 
   // 단어 좌우 변경 토글
   const [isOpposit, setIsOpposit] = useState(false);
@@ -69,7 +91,6 @@ function App() {
       <List
         words={words}
         setWords={setWords}
-        listSelect={listSelect}
         modalUpdateWords={modalUpdateWords}
         setModalUpdateWords={setModalUpdateWords}
         setUpdateId={setUpdateId}
@@ -85,9 +106,9 @@ function App() {
   }
 
   // 기능 경고 모달
-  const [modalWarn, setModalWarn] = useState(false);
+  // const [modalWarn, setModalWarn] = useState(false);
   // 기능 경고 종류
-  const [warnFunc, setWarnFunc] = useState('');
+  // const [warnFunc, setWarnFunc] = useState('');
 
   // 단어 생성 모달
   const [modalAddWords, setModalAddWords] = useState(false);
@@ -103,17 +124,20 @@ function App() {
   // 이름을 지을건지 수정할건지 체크
   const [isAddWordset, setIsAddWordset] = useState(true);
 
+    /** 리덕스의 사용으로 사라진 코드
   // 로컬스토리지에 Wordset이라는 이름의 배열이 있으면 그걸 가져오거나, 없을 경우 디폴트값을 가져온다.
-  const [options, setOptions] = useState(() => {
-    let storedWordset = localStorage.getItem('Wordset');
-    return storedWordset ? JSON.parse(storedWordset) : ['Default Wordset'];
-  });
+  // const [options, setOptions] = useState(() => {
+  //   let storedWordset = localStorage.getItem('Wordset');
+  //   return storedWordset ? JSON.parse(storedWordset) : ['Default Wordset'];
+  // });
+  */
+ 
   const [editIndex, setEditIndex] = useState(-1);
 
   // options(워드셋)이 변경될 때마다 로컬스토리지에 'Wordset'이름으로 배열을 저장
   useEffect(() => {
-    localStorage.setItem('Wordset', JSON.stringify(options));
-  }, [options]);
+    localStorage.setItem('Wordset', JSON.stringify(wordsetLists));
+  }, [wordsetLists]);
 
   return (
     <div className="App">
@@ -128,12 +152,12 @@ function App() {
             name="listname"
             id="listname"
             onChange={(e) => {
-              setListSelect(e.target.value);
-              setEditIndex(options.indexOf(e.target.value));
+              dispatch(wordsetSelectChange(e.target.value));
+              setEditIndex(wordsetLists.indexOf(e.target.value));
             }}
-            value={listSelect}
+            value={wordsetSelect}
           >
-            {options.map((option, i) => (
+            {wordsetLists.map((option, i) => (
               <option key={i} value={option}>
                 {option}
               </option>
@@ -155,12 +179,14 @@ function App() {
             id="btn_ListMod"
             onClick={(e) => {
               e.preventDefault();
-              if (listSelect !== 'Default Wordset') {
+              if (wordsetSelect !== 'Default Wordset') {
                 setIsAddWordset(false);
                 setModalWordsetAddMod(true);
               } else {
-                setWarnFunc('MOD_DEFAULT');
-                setModalWarn(true);
+                // setWarnFunc('MOD_DEFAULT');
+                dispatch(warnFuncChange('MOD_DEFAULT'));
+                // setModalWarn(true);
+                dispatch(modalWarnToggle(true))
               }
             }}
           >
@@ -171,11 +197,12 @@ function App() {
             id="btn_ListDel"
             onClick={(e) => {
               e.preventDefault();
-              if (listSelect !== 'Default Wordset') {
+              if (wordsetSelect !== 'Default Wordset') {
                 setModalWordsetDelete(true);
               } else {
-                setWarnFunc('DEL_DEFAULT');
-                setModalWarn(true);
+                // setWarnFunc('DEL_DEFAULT');
+                dispatch(warnFuncChange('DEL_DEFAULT'));
+                dispatch(modalWarnToggle(true))
               }
             }}
           >
@@ -188,18 +215,15 @@ function App() {
       <div className="section">{section}</div>
 
       {/* 하단옵션바 */}
-      <div className="bottom_option">
+      <div className={'bottom_option'}>
         <div>
-          <div
-            className="btn_option list_option"
-            onClick={() => setIsHiding(!isHiding)}
-          >
+          <div className={hidingClass} onClick={() => setIsHiding(!isHiding)}>
             Hide
             <br />
             Meaning
           </div>
           <div
-            className="btn_option list_option"
+            className={oppositClass}
             onClick={() => {
               setIsOpposit(!isOpposit);
             }}
@@ -217,8 +241,9 @@ function App() {
           <div
             className="btn_option list_option"
             onClick={() => {
-              setWarnFunc('NOT_WORKING');
-              setModalWarn(true);
+              // setWarnFunc('NOT_WORKING');
+              dispatch(warnFuncChange('NOT_WORKING'));
+              dispatch(modalWarnToggle(true))
             }}
           >
             Update
@@ -241,28 +266,27 @@ function App() {
         <div
           className="btn"
           onClick={() => {
-            setWarnFunc('NOT_WORKING');
-            setModalWarn(true);
+            // setWarnFunc('NOT_WORKING');
+            dispatch(warnFuncChange('NOT_WORKING'));
+            dispatch(modalWarnToggle(true))
           }}
         >
-        <img src={imgPocket} style={{width:50, height:50}}/>
+          {/* <img src={imgPocket} style={{width:50, height:50}}/> */}
+          Test
         </div>
         <div
           className="btn"
           onClick={() => {
-            setWarnFunc('NOT_WORKING');
-            setModalWarn(true);
+            // setWarnFunc('NOT_WORKING');
+            dispatch(warnFuncChange('NOT_WORKING'));
+            dispatch(modalWarnToggle(true))
           }}
         >
           Online
         </div>
       </div>
 
-      <ModalOkay
-        modalWarn={modalWarn}
-        setModalWarn={setModalWarn}
-        warnFunc={warnFunc}
-      />
+      <ModalOkay/>
       <ModalAddWords
         words={words}
         setWords={setWords}
@@ -288,26 +312,16 @@ function App() {
         setWords={setWords}
         modalWordsetAddMod={modalWordsetAddMod}
         setModalWordsetAddMod={setModalWordsetAddMod}
-        options={options}
-        setOptions={setOptions}
         wordsetName={wordsetName}
         setWordsetName={setWordsetName}
-        listSelect={listSelect}
-        setListSelect={setListSelect}
         isAddWordset={isAddWordset}
         editIndex={editIndex}
-        setWarnFunc={setWarnFunc}
-        setModalWarn={setModalWarn}
         setEditIndex={setEditIndex}
       />
       <ModalWordsetDelete
-        listSelect={listSelect}
         modalWordsetDelete={modalWordsetDelete}
         setModalWordsetDelete={setModalWordsetDelete}
-        options={options}
         editIndex={editIndex}
-        setOptions={setOptions}
-        setListSelect={setListSelect}
         setEditIndex={setEditIndex}
       />
     </div>

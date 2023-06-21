@@ -1,36 +1,42 @@
 /*eslint-disable*/
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 function List({
   words,
   setWords,
-  listSelect,
   setModalUpdateWords,
   setUpdateId,
   setModalDeleteWords,
   isHiding,
   isOpposit,
 }) {
-  // 현재 선택된 리스트 listSelect의 내용이 변경될 때 setWords의 상태를 변경시켜 줍니다.
+
+  // 리덕스 툴킷 사용 (선택된 워드셋과 변경, 이전 이름 listSelect)
+  const wordsetSelect = useSelector((state)=>{
+    return state.wordsetSelect.value;
+   })
+
+  // 현재 선택된 리스트 wordsetSelect의 내용이 변경될 때 setWords의 상태를 변경시켜 줍니다.
   useEffect(() => {
-    // 기본적으로 listSelect 변수의 이름과 같은(현재 선택된) 배열을 storedWords 변수에 넣습니다.
-    let storedWords = localStorage.getItem(listSelect);
+    // 기본적으로 wordsetSelect 변수의 이름과 같은(현재 선택된) 배열을 storedWords 변수에 넣습니다.
+    let storedWords = localStorage.getItem(wordsetSelect);
     // 만약 storedwords와 같은 이름의 배열이 로컬스토리지에 있다면,
     if (storedWords) {
       // 그것을 setWords에 넣어 현재 보이는 화면에 단어들을 출력합니다.
       setWords(JSON.parse(storedWords));
     } else {
-      // 그냥 선택된 리스트 이름(listSelect 변수의 값)으로 로컬스토리지에 배열을 만들고 값으로 문자열 "[]"을 저장한다.
-      localStorage.setItem(listSelect, '[]');
+      // 그냥 선택된 리스트 이름(wordsetSelect 변수의 값)으로 로컬스토리지에 배열을 만들고 값으로 문자열 "[]"을 저장한다.
+      localStorage.setItem(wordsetSelect, '[]');
       // 그것을 현재 보이는 화면에 출력하도록 설정한다.
-      setWords(listSelect);
+      setWords(wordsetSelect);
     }
-  }, [listSelect]);
+  }, [wordsetSelect]);
 
   // 변수 words 가 변경될때마다 words의 배열값을 로컬스토리지에 저장시킨다.
   useEffect(() => {
-    localStorage.setItem(listSelect, JSON.stringify(words));
+    localStorage.setItem(wordsetSelect, JSON.stringify(words));
   }, [words]);
 
   // 로컬스토리지에 저장된 배열 words가 변경될 때마다 배열을 재탐색하여 index+1이 되는 속성값을 id에 저장한다.
@@ -38,9 +44,9 @@ function List({
     function resetIds(words) {
       return words.map((word, index) => ({ ...word, id: index + 1 }));
     }
-    let storedWords = localStorage.getItem(listSelect);
+    let storedWords = localStorage.getItem(wordsetSelect);
     setWords(resetIds(JSON.parse(storedWords)));
-  }, [localStorage.getItem(listSelect)]);
+  }, [localStorage.getItem(wordsetSelect)]);
 
   // 선택시 아래로 버튼 내려오는것 상태 저장 스테이트.
   // 초기상태는 빈 객체로 시작합니다. 객체를 사용하는 이유는 아이디를 쉽게 조회하고 변경할 수 있기 때문입니다.

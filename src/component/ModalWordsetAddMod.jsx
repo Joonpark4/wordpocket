@@ -1,23 +1,36 @@
 /*eslint-disable*/
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
+import { useDispatch, useSelector } from 'react-redux';
+import { wordsetSelectChange } from './Redux/SliceWordsetSelect';
+import { wordsetListChange } from './Redux/SliceWordsetList';
+import { modalWarnToggle } from './Redux/SliceModalWarn';
+import { warnFuncChange } from './Redux/SliceWarnFunc';
 
 export default function ModalWordsetAddMod({
   words,
   modalWordsetAddMod,
   setModalWordsetAddMod,
-  options,
-  setOptions,
   wordsetName,
   setWordsetName,
-  listSelect,
-  setListSelect,
   isAddWordset,
   editIndex,
   setWarnFunc,
-  setModalWarn,
   setEditIndex,
 }) {
+  // 리덕스 툴킷 사용 (리모콘)
+  const dispatch = useDispatch();
+
+  // 리덕스 툴킷 사용 (선택된 워드셋과 변경, 이전 이름 listSelect)
+  const wordsetSelect = useSelector((state) => {
+    return state.wordsetSelect.value;
+  });
+
+  // 리덕스 툴킷 사용 (워드셋 리스트, 이전 이름 options)
+  const wordsetLists = useSelector((state) => {
+    return state.wordsetList.value;
+  });
+
   const style = {
     overlay: {
       position: 'fixed',
@@ -74,16 +87,16 @@ export default function ModalWordsetAddMod({
     padding: '0px 10px',
   };
 
-  // useEffect(() => {
-  //   console.log(words);
-  //   localStorage.setItem(listSelect, JSON.stringify(words));
-  // });
+  // 수정될 이름
+  const [modName, setModName] = useState(wordsetSelect);
+  useEffect(() => {
+    setModName(wordsetSelect);
+  }, [wordsetSelect]);
 
   // 수정될 이름
-  const [modName, setModName] = useState(listSelect);
-  useEffect(() => {
-    setModName(listSelect);
-  }, [listSelect]);
+  useEffect(()=>{
+    setWordsetName(wordsetName)
+  },[wordsetSelect])
 
   // 워드셋
   const clickWordsetAddMod = () => {
@@ -91,38 +104,50 @@ export default function ModalWordsetAddMod({
       // 만약 텍스트박스에 공백이 없을 경우
       if (wordsetName !== '') {
         // 기존 워드셋의 개수만큼 for문 반복 실행
-        for (let i = 0; i < options.length; i++) {
-          // 만약 새로 만드려는 워드셋 이름이 기존워드셋과 동일한 경우 
-          if (wordsetName == options[i]) {
+        for (let i = 0; i < wordsetLists.length; i++) {
+          // 만약 새로 만드려는 워드셋 이름이 기존워드셋과 동일한 경우
+          if (wordsetName == wordsetLists[i]) {
             // 새 워드셋 생성 불가 경고 모달창을 내보내고
-            setWarnFunc("ADD_FAILE");
-            setModalWarn(true);
+            // setWarnFunc('ADD_FAILE');
+            dispatch(warnFuncChange('ADD_FAILE'))
+            // setModalWarn(true);
+            dispatch(modalWarnToggle(true));
             // 워드셋 모달창을 닫고 끝냄
             setWordsetName('');
             setModalWordsetAddMod(false);
             return;
           }
         }
-        setOptions([...options, wordsetName]);
-        setListSelect(wordsetName);
+        // setOptions([...wordsetLists, wordsetName]);
+        dispatch(wordsetListChange([...wordsetLists, wordsetName]));
+        dispatch(wordsetSelectChange(wordsetName));
         setWordsetName('');
         setModalWordsetAddMod(false);
-        setEditIndex(options.indexOf(wordsetName));
+        setEditIndex(wordsetLists.indexOf(wordsetName));
       } else {
-        alert("You can't make a wordset with blank");
+        // alert("You can't make a wordset with blank");
+      setModalWordsetAddMod(false);
+      dispatch(warnFuncChange("WORDSET_ADD_BLANK"))
+      dispatch(modalWarnToggle(true))
       }
     } else {
-      if (listSelect !== 'Default Wordset') {
+      // if (wordsetName !== '') {
         // 새로운 이름으로 다시 리스트 만들어 넣기
         localStorage.setItem(modName, JSON.stringify(words));
         // 예전 이름을 가진 리스트는 삭제하기
-        localStorage.removeItem(listSelect);
-        const newOptions = [...options];
-        newOptions[editIndex] = modName;
-        setOptions(newOptions);
-        setListSelect(modName);
+        localStorage.removeItem(wordsetSelect);
+        const newWordsetLists = [...wordsetLists];
+        newWordsetLists[editIndex] = modName;
+        // setOptions(newOptions);
+        dispatch(wordsetListChange(newWordsetLists));
+        dispatch(wordsetSelectChange(modName));
         setModalWordsetAddMod(false);
-      }
+      // } else {
+      // dispatch(wordsetSelectChange('Default Wordset'));
+      // setModalWordsetAddMod(false);
+      // dispatch(warnFuncChange("WORDSET_ADD_BLANK"))
+      // dispatch(modalWarnToggle(true))
+      // }
     }
   };
 

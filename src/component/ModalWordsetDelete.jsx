@@ -1,6 +1,9 @@
 /*eslint-disable*/
 import React, { useEffect } from 'react';
 import Modal from 'react-modal';
+import { useDispatch, useSelector } from 'react-redux';
+import { wordsetSelectChange } from './Redux/SliceWordsetSelect';
+import { wordsetListChange } from './Redux/SliceWordsetList';
 
 export default function ModalWordsetDelete({
   modalWordsetDelete,
@@ -12,6 +15,20 @@ export default function ModalWordsetDelete({
   setListSelect,
   setEditIndex,
 }) {
+  
+  // 리덕스 툴킷 사용 (리모콘)
+  const dispatch = useDispatch();
+  
+  // 리덕스 툴킷 사용 (선택된 워드셋과 변경, 이전 이름 listSelect)
+  const wordsetSelect = useSelector((state)=>{
+    return state.wordsetSelect.value;
+   })
+   
+  // 리덕스 툴킷 사용 (워드셋 리스트, 이전 이름 options)
+  const wordsetLists = useSelector((state) => {
+    return state.wordsetList.value;
+  });
+
   const style = {
     overlay: {
       position: 'fixed',
@@ -64,19 +81,21 @@ export default function ModalWordsetDelete({
   
   // 아래 구문이 없을 경우 워드셋 생성 직후 바로 삭제할 때 인덱스가 의도대로 잡히지 않는다.
     useEffect(()=>{
-      setEditIndex(options.indexOf(listSelect));
-    },[listSelect])
+      setEditIndex(wordsetLists.indexOf(wordsetSelect));
+    },[wordsetSelect])
 
   const clickWordsetDelete = () => {
     // editIndex가 아닌 항목들로 구성된 새로운 옵션 배열을 생성합니다.
     // filter를 사용해 해당 인덱스의 항목을 제외한 배열을 생성합니다.
-    const newOptions = options.filter((_,i) => i !== editIndex);
+    const newWordsetLists = wordsetLists.filter((_,i) => i !== editIndex);
     // 변경된 새로운 옵션 배열을 업데이트합니다.
-    setOptions(newOptions);
+    // setOptions(newOptions);
+    dispatch(wordsetListChange(newWordsetLists));
     // 선택된 옵션 값을 초기화하고, 'editIndex' 값을 -1로 설정하여 편집 상태를 종료합니다.
     setEditIndex(-1);
-    setListSelect('Default Wordset');
-    localStorage.removeItem(listSelect);
+    // setListSelect('Default Wordset');
+    dispatch(wordsetSelectChange('Default Wordset'))
+    localStorage.removeItem(wordsetSelect);
     setModalWordsetDelete(false);
   };
   return (
