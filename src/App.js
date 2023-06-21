@@ -23,11 +23,6 @@ function App() {
   // 탭 선택
   const [tap, setTap] = useState('List');
 
-  /** 리덕스의 사용으로 사라진 코드
-  // // 리스트 선택과 변경
-  // const [listSelect, setListSelect] = useState('Default Wordset');
-  */
-
   // 리덕스 툴킷 사용 (리모콘)
   const dispatch = useDispatch();
 
@@ -41,8 +36,11 @@ function App() {
     return state.wordsetList.value;
   });
 
-  // 먼저 useState로 words를 설정하여 setWords로 값이 변할때마다 리렌더링을 하도록 선언한다.
-  // 이 때 storedWords라는 값에 로컬스토리지 words라는 이름의 배열값을 집어넣는데, words라는 이름으로 저장된 배열이 없다면 default_words 즉 기본으로 저장된 값을 storedWords에 저장하도록 한다. 그 후 storedWords는 words의 값이 된다
+  // 리덕스 툴킷 사용 (워드셋 리스트, 이전 이름 options)
+  const wordsR = useSelector((state) => {
+    return state.wordsR.value;
+  });
+
   const default_words = [
     { id: 1, left: 'Oi', right: 'Hey' },
     { id: 2, left: 'Cerveja', right: 'Beer' },
@@ -58,10 +56,6 @@ function App() {
     { id: 12, left: 'Namorada', right: 'Girlfriend' },
   ];
 
-  // 현재 선택된 리스트의 상태입니다. listSelect로 현재 선택된 리스트가 로컬스토리지에 있으면 그것을 가져다씁니다.
-  // 만약 storedWords가 거짓이라면(listSelect변수의 이름과 같은 배열이름이 로컬스토리지에 없다면)
-  // 미리 저장된 default_words를 가져다 씁니다.
-  // 리스트 정렬과 리렌더 관련 코드는 List.jsx에 있고, 리스트 내 단어 생성 관련 코드는 ModalAddWords.jsx에 있습니다.
   const [words, setWords] = useState(() => {
     let storedWords = localStorage.getItem('Default Wordset');
     return storedWords ? JSON.parse(storedWords) : default_words;
@@ -105,33 +99,19 @@ function App() {
     section = <div className="warning">Online 탭은 준비중입니다.</div>;
   }
 
-  // 기능 경고 모달
-  // const [modalWarn, setModalWarn] = useState(false);
-  // 기능 경고 종류
-  // const [warnFunc, setWarnFunc] = useState('');
-
   // 단어 생성 모달
   const [modalAddWords, setModalAddWords] = useState(false);
 
-  // 리스트 생성 모달, 리스트 이름
+  // 리스트 생성 수정 모달
   const [modalWordsetAddMod, setModalWordsetAddMod] = useState(false);
 
   // wordset을 삭제 때 사용하는 모달
-  const [modalWordsetDelete, setModalWordsetDelete] = useState(false);
+  const [modalWordsetDelete, setModalWordsetDelete] = useState(false)
 
-  // wordset 이름을 짓거나 수정할 때 사용하는 모달
-  const [wordsetName, setWordsetName] = useState('');
   // 이름을 지을건지 수정할건지 체크
   const [isAddWordset, setIsAddWordset] = useState(true);
-
-    /** 리덕스의 사용으로 사라진 코드
-  // 로컬스토리지에 Wordset이라는 이름의 배열이 있으면 그걸 가져오거나, 없을 경우 디폴트값을 가져온다.
-  // const [options, setOptions] = useState(() => {
-  //   let storedWordset = localStorage.getItem('Wordset');
-  //   return storedWordset ? JSON.parse(storedWordset) : ['Default Wordset'];
-  // });
-  */
  
+  // 워드셋 드롭다운 메뉴의 인덱스를 확인
   const [editIndex, setEditIndex] = useState(-1);
 
   // options(워드셋)이 변경될 때마다 로컬스토리지에 'Wordset'이름으로 배열을 저장
@@ -183,9 +163,7 @@ function App() {
                 setIsAddWordset(false);
                 setModalWordsetAddMod(true);
               } else {
-                // setWarnFunc('MOD_DEFAULT');
                 dispatch(warnFuncChange('MOD_DEFAULT'));
-                // setModalWarn(true);
                 dispatch(modalWarnToggle(true))
               }
             }}
@@ -200,7 +178,6 @@ function App() {
               if (wordsetSelect !== 'Default Wordset') {
                 setModalWordsetDelete(true);
               } else {
-                // setWarnFunc('DEL_DEFAULT');
                 dispatch(warnFuncChange('DEL_DEFAULT'));
                 dispatch(modalWarnToggle(true))
               }
@@ -241,7 +218,6 @@ function App() {
           <div
             className="btn_option list_option"
             onClick={() => {
-              // setWarnFunc('NOT_WORKING');
               dispatch(warnFuncChange('NOT_WORKING'));
               dispatch(modalWarnToggle(true))
             }}
@@ -266,7 +242,6 @@ function App() {
         <div
           className="btn"
           onClick={() => {
-            // setWarnFunc('NOT_WORKING');
             dispatch(warnFuncChange('NOT_WORKING'));
             dispatch(modalWarnToggle(true))
           }}
@@ -277,7 +252,6 @@ function App() {
         <div
           className="btn"
           onClick={() => {
-            // setWarnFunc('NOT_WORKING');
             dispatch(warnFuncChange('NOT_WORKING'));
             dispatch(modalWarnToggle(true))
           }}
@@ -312,8 +286,6 @@ function App() {
         setWords={setWords}
         modalWordsetAddMod={modalWordsetAddMod}
         setModalWordsetAddMod={setModalWordsetAddMod}
-        wordsetName={wordsetName}
-        setWordsetName={setWordsetName}
         isAddWordset={isAddWordset}
         editIndex={editIndex}
         setEditIndex={setEditIndex}

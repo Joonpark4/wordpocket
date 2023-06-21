@@ -11,11 +11,8 @@ export default function ModalWordsetAddMod({
   words,
   modalWordsetAddMod,
   setModalWordsetAddMod,
-  wordsetName,
-  setWordsetName,
   isAddWordset,
   editIndex,
-  setWarnFunc,
   setEditIndex,
 }) {
   // 리덕스 툴킷 사용 (리모콘)
@@ -86,6 +83,8 @@ export default function ModalWordsetAddMod({
     fontSize: '1.5em',
     padding: '0px 10px',
   };
+  // wordset 이름을 짓거나 수정할 때 사용하는 변수
+  const [wordsetName, setWordsetName] = useState('');
 
   // 수정될 이름
   const [modName, setModName] = useState(wordsetSelect);
@@ -93,10 +92,10 @@ export default function ModalWordsetAddMod({
     setModName(wordsetSelect);
   }, [wordsetSelect]);
 
-  // 수정될 이름
-  useEffect(()=>{
-    setWordsetName(wordsetName)
-  },[wordsetSelect])
+  // // 수정될 이름
+  // useEffect(()=>{
+  //   setWordsetName(wordsetName)
+  // },[wordsetSelect])
 
   // 워드셋
   const clickWordsetAddMod = () => {
@@ -109,7 +108,7 @@ export default function ModalWordsetAddMod({
           if (wordsetName == wordsetLists[i]) {
             // 새 워드셋 생성 불가 경고 모달창을 내보내고
             // setWarnFunc('ADD_FAILE');
-            dispatch(warnFuncChange('ADD_FAILE'))
+            dispatch(warnFuncChange('ADD_FAILE'));
             // setModalWarn(true);
             dispatch(modalWarnToggle(true));
             // 워드셋 모달창을 닫고 끝냄
@@ -126,12 +125,12 @@ export default function ModalWordsetAddMod({
         setEditIndex(wordsetLists.indexOf(wordsetName));
       } else {
         // alert("You can't make a wordset with blank");
-      setModalWordsetAddMod(false);
-      dispatch(warnFuncChange("WORDSET_ADD_BLANK"))
-      dispatch(modalWarnToggle(true))
+        setModalWordsetAddMod(false);
+        dispatch(warnFuncChange('WORDSET_ADD_BLANK'));
+        dispatch(modalWarnToggle(true));
       }
     } else {
-      // if (wordsetName !== '') {
+      if (modName != '') {
         // 새로운 이름으로 다시 리스트 만들어 넣기
         localStorage.setItem(modName, JSON.stringify(words));
         // 예전 이름을 가진 리스트는 삭제하기
@@ -142,12 +141,14 @@ export default function ModalWordsetAddMod({
         dispatch(wordsetListChange(newWordsetLists));
         dispatch(wordsetSelectChange(modName));
         setModalWordsetAddMod(false);
-      // } else {
-      // dispatch(wordsetSelectChange('Default Wordset'));
-      // setModalWordsetAddMod(false);
-      // dispatch(warnFuncChange("WORDSET_ADD_BLANK"))
-      // dispatch(modalWarnToggle(true))
-      // }
+      } else {
+        // 변경할 이름이 공백인 경우 텍스트를 다시 이전으로 되돌림
+        setModName(wordsetSelect)
+        // 모달을 종료하고 경고문 모달을 다시 출력
+        setModalWordsetAddMod(false);
+        dispatch(warnFuncChange('WORDSET_ADD_BLANK'));
+        dispatch(modalWarnToggle(true));
+      }
     }
   };
 
@@ -163,7 +164,10 @@ export default function ModalWordsetAddMod({
         style={textbox}
         placeholder="WordSet name"
         type="text"
-        onChange={(e) => setWordsetName(e.target.value)}
+        onChange={(e) => {
+          setWordsetName(e.target.value);
+          console.log(wordsetName);
+        }}
         value={wordsetName}
       />
     );
