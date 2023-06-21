@@ -4,14 +4,21 @@ import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { modalWarnToggle } from './Redux/SliceModalWarn';
 import { warnFuncChange } from './Redux/SliceWarnFunc';
+import { wordsChange } from './Redux/SliceWords';
 
-export default function ModalAddWords({ words, setWords, modalAddWords, setModalAddWords}) {
-  const [id, setId] = useState(words.length);
-  const [addLeft, setAddLeft] = useState("");
-  const [addRight, setAddRight] = useState("");
+export default function ModalAddWords({ modalAddWords, setModalAddWords}) {
 
   // 리덕스 툴킷 리모콘 사용
   const dispatch = useDispatch();
+
+  // 리덕스 툴킷 사용 (워드 리스트, 이전 이름 words)
+  const wordsR = useSelector((state) => {
+    return state.wordsR.value;
+  });
+
+  const [id, setId] = useState(wordsR.length);
+  const [addLeft, setAddLeft] = useState("");
+  const [addRight, setAddRight] = useState("");
 
   const style = {
     overlay: {
@@ -76,8 +83,9 @@ export default function ModalAddWords({ words, setWords, modalAddWords, setModal
     if (addLeft !== '' && addRight !== '') {
       // 새로운 단어 오브젝트를 생성한다
       const newWord = { id: id+1 , left: addLeft, right: addRight };
-      const newWords = [...words, newWord];
-      setWords(newWords);
+      const newWords = [...wordsR, newWord];
+      // setWords(newWords);
+      dispatch(wordsChange(newWords))
       setId(id+1);
       setAddLeft(''); // 텍스트박스 비우기
       setAddRight(''); // 텍스트박스 비우기

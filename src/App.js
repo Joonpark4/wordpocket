@@ -36,31 +36,6 @@ function App() {
     return state.wordsetList.value;
   });
 
-  // 리덕스 툴킷 사용 (워드셋 리스트, 이전 이름 options)
-  const wordsR = useSelector((state) => {
-    return state.wordsR.value;
-  });
-
-  const default_words = [
-    { id: 1, left: 'Oi', right: 'Hey' },
-    { id: 2, left: 'Cerveja', right: 'Beer' },
-    { id: 3, left: 'Laranja', right: 'Orange' },
-    { id: 4, left: 'Livro', right: 'Book' },
-    { id: 5, left: 'Carta', right: 'Letter' },
-    { id: 6, left: 'Chave', right: 'Key' },
-    { id: 7, left: 'Gato', right: 'Cat' },
-    { id: 8, left: 'Cachorro', right: 'Dog' },
-    { id: 9, left: 'Como', right: 'Eat' },
-    { id: 10, left: 'Bebo', right: 'Drink' },
-    { id: 11, left: 'Casa', right: 'House' },
-    { id: 12, left: 'Namorada', right: 'Girlfriend' },
-  ];
-
-  const [words, setWords] = useState(() => {
-    let storedWords = localStorage.getItem('Default Wordset');
-    return storedWords ? JSON.parse(storedWords) : default_words;
-  });
-
   // 단어 숨김 토글
   const [isHiding, setIsHiding] = useState(false);
   let hidingClass = ['btn_option list_option', isHiding ? 'btn_pushed' : null]
@@ -83,8 +58,6 @@ function App() {
   if (tap === 'List') {
     section = (
       <List
-        words={words}
-        setWords={setWords}
         modalUpdateWords={modalUpdateWords}
         setModalUpdateWords={setModalUpdateWords}
         setUpdateId={setUpdateId}
@@ -262,28 +235,20 @@ function App() {
 
       <ModalOkay/>
       <ModalAddWords
-        words={words}
-        setWords={setWords}
         modalAddWords={modalAddWords}
         setModalAddWords={setModalAddWords}
       />
       <ModalUpdateWords
-        words={words}
-        setWords={setWords}
         modalUpdateWords={modalUpdateWords}
         setModalUpdateWords={setModalUpdateWords}
         updateId={updateId}
       />
       <ModalDeleteWords
-        words={words}
-        setWords={setWords}
         modalDeleteWords={modalDeleteWords}
         setModalDeleteWords={setModalDeleteWords}
         updateId={updateId}
       />
       <ModalWordsetAddMod
-        words={words}
-        setWords={setWords}
         modalWordsetAddMod={modalWordsetAddMod}
         setModalWordsetAddMod={setModalWordsetAddMod}
         isAddWordset={isAddWordset}

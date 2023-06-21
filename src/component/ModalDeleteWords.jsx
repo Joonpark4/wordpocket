@@ -1,8 +1,18 @@
 /*eslint-disable*/
 import React from 'react';
 import Modal from 'react-modal';
+import { useDispatch, useSelector } from 'react-redux';
+import { wordsChange } from './Redux/SliceWords';
 
-export default function ModalDeleteWords({words, setWords, modalDeleteWords, setModalDeleteWords,updateId}) {
+export default function ModalDeleteWords({ modalDeleteWords, setModalDeleteWords,updateId}) {
+
+  // 리덕스 툴킷 리모콘 사용
+  const dispatch = useDispatch();
+
+  // 리덕스 툴킷 사용 (워드 리스트, 이전 이름 words)
+  const wordsR = useSelector((state) => {
+    return state.wordsR.value;
+  });
 
   const style = {
     overlay: {
@@ -59,8 +69,9 @@ export default function ModalDeleteWords({words, setWords, modalDeleteWords, set
   const clickDeleteWord = (e) =>{
     e.preventDefault(); // 기본동작버튼을 없애고
       // // 기존 단어를 삭제
-      const deletedWords = words.filter((word) => updateId !== word.id);
-      setWords(deletedWords);
+      const deletedWords = wordsR.filter((word) => updateId !== word.id);
+      // setWords(deletedWords);
+      dispatch(wordsChange(deletedWords));
       setModalDeleteWords(false);
       // 어차피 setWords하면 자동으로 리스트에서 사라지기 때문에 굳이 다시 로컬스토리지를 업데이트 해주지 않아도 된다.
       // localStorage.setItem(listSelect, JSON.stringify(deletedWords));

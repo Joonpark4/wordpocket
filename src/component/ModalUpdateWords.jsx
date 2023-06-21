@@ -1,8 +1,19 @@
 /*eslint-disable*/
 import React, { useEffect, useState, useRef } from 'react';
 import Modal from 'react-modal';
+import { useDispatch, useSelector } from 'react-redux';
+import { wordsChange } from './Redux/SliceWords';
 
-export default function ModalUpdateWords({ words, setWords, modalUpdateWords, setModalUpdateWords,updateId}) {
+export default function ModalUpdateWords({ modalUpdateWords, setModalUpdateWords,updateId}) {
+
+  // 리덕스 툴킷 리모콘 사용
+  const dispatch = useDispatch();
+
+  // 리덕스 툴킷 사용 (워드 리스트, 이전 이름 words)
+  const wordsR = useSelector((state) => {
+    return state.wordsR.value;
+  });
+
   const [updateLeft, setUpdateLeft] = useState("");
   const [updateRight, setUpdateRight] = useState("");
 
@@ -14,19 +25,10 @@ export default function ModalUpdateWords({ words, setWords, modalUpdateWords, se
     if (isFirstRender.current) {
       isFirstRender.current = false;
     } else {
-      setUpdateLeft(words[updateId-1].left);
-      setUpdateRight(words[updateId-1].right);
+      setUpdateLeft(wordsR[updateId-1].left);
+      setUpdateRight(wordsR[updateId-1].right);
     }
   },[modalUpdateWords])
-
-  // useEffect(()=>{
-  //   if (isFirstRender.current) {
-  //     isFirstRender.current = false;
-  //   } else {
-  //     setUpdateLeft(words[updateId-1].left);
-  //     setUpdateRight(words[updateId-1].right);
-  //   }
-  // },[listSelect])
 
   const style = {
     overlay: {
@@ -91,13 +93,14 @@ export default function ModalUpdateWords({ words, setWords, modalUpdateWords, se
     // 만약 텍스트박스에 공백이 없을 경우
     if (updateLeft !== '' && updateRight !== '') {
       // // 기존 단어를 수정
-      const updatedWords = words.map((word) => {
+      const updatedWords = wordsR.map((word) => {
         if (updateId === word.id) {
           return { "id":updateId, "left":updateLeft, "right":updateRight };
         }
         return word;
       });
-      setWords(updatedWords);
+      // setWords(updatedWords);
+      dispatch(wordsChange(updatedWords));
       // 어차피 setWords하면 자동으로 리스트에서 사라지기 때문에 굳이 다시 로컬스토리지를 업데이트 해주지 않아도 된다.
       // localStorage.setItem(listSelect, JSON.stringify(updatedWords));
       setUpdateLeft('');
@@ -124,8 +127,8 @@ export default function ModalUpdateWords({ words, setWords, modalUpdateWords, se
         </form>
         <div style={btn_box}>
           <button style={btn_style} onClick={() => {setModalUpdateWords(false);
-      setUpdateLeft(words[updateId-1].left);
-      setUpdateRight(words[updateId-1].right);}}>
+      setUpdateLeft(wordsR[updateId-1].left);
+      setUpdateRight(wordsR[updateId-1].right);}}>
             Cancel
           </button>
           <button style={btn_style} onClick={clickUpdateWord}>

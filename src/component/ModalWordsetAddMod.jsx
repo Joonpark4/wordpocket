@@ -8,7 +8,6 @@ import { modalWarnToggle } from './Redux/SliceModalWarn';
 import { warnFuncChange } from './Redux/SliceWarnFunc';
 
 export default function ModalWordsetAddMod({
-  words,
   modalWordsetAddMod,
   setModalWordsetAddMod,
   isAddWordset,
@@ -26,6 +25,11 @@ export default function ModalWordsetAddMod({
   // 리덕스 툴킷 사용 (워드셋 리스트, 이전 이름 options)
   const wordsetLists = useSelector((state) => {
     return state.wordsetList.value;
+  });
+  
+  // 리덕스 툴킷 사용 (워드 리스트, 이전 이름 words)
+  const wordsR = useSelector((state) => {
+    return state.wordsR.value;
   });
 
   const style = {
@@ -132,7 +136,7 @@ export default function ModalWordsetAddMod({
     } else {
       if (modName != '') {
         // 새로운 이름으로 다시 리스트 만들어 넣기
-        localStorage.setItem(modName, JSON.stringify(words));
+        localStorage.setItem(modName, JSON.stringify(wordsR));
         // 예전 이름을 가진 리스트는 삭제하기
         localStorage.removeItem(wordsetSelect);
         const newWordsetLists = [...wordsetLists];
