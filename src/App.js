@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import { useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import './App.css';
 import List from './component/List';
 import ModalOkay from './component/ModalOkay';
@@ -50,7 +50,7 @@ function App() {
   let top_option;
   if (tap === 'List') {
   }
-
+  
   // 탭에 따른 섹션 내용 변경
   let section;
   if (tap === 'List') {
@@ -74,26 +74,6 @@ function App() {
     localStorage.setItem('Wordset', JSON.stringify(wordsetLists));
   }, [wordsetLists]);
 
-  // 아래는 주소창을 삭제시켜줍니다.
-  useEffect(() => {
-    window.addEventListener(
-      'load',
-      function () {
-        setTimeout(scrollTo, 0, 0, 1);
-      },
-      false
-    );
-
-    return () => {
-      window.removeEventListener(
-        'load',
-        function () {
-          setTimeout(scrollTo, 0, 0, 1);
-        },
-        false
-      );
-    };
-  }, []);
 
   return (
     <div className="App">
@@ -218,6 +198,7 @@ function App() {
         <div
           className="btn"
           onClick={() => {
+            // setTap('Test')
             dispatch(warnFuncChange('NOT_WORKING'));
             dispatch(modalWarnToggle(true));
           }}

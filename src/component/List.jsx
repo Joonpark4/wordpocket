@@ -1,27 +1,24 @@
 /*eslint-disable*/
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { wordsChange } from './Redux/SliceWords';
 import { modalWordModToggle } from './Redux/SliceModalWordMod';
 import { modalWordDelToggle } from './Redux/SliceModalWordDel';
 import { updateIdChange } from './Redux/SliceUpdateId';
 
-function List({
-  isHiding,
-  isOpposit,
-}) {
+function List({ isHiding, isOpposit }) {
   const dispatch = useDispatch();
 
   // 리덕스 툴킷 사용 (선택된 워드셋과 변경, 이전 이름 listSelect)
-  const wordsetSelect = useSelector((state)=>{
+  const wordsetSelect = useSelector((state) => {
     return state.wordsetSelect.value;
-   })
+  });
 
-   // 리덕스 툴킷 사용 (워드 리스트, 이전 이름 words)
-   const wordsR = useSelector((state) => {
-     return state.wordsR.value;
-   });
+  // 리덕스 툴킷 사용 (워드 리스트, 이전 이름 words)
+  const wordsR = useSelector((state) => {
+    return state.wordsR.value;
+  });
 
   // 현재 선택된 리스트 wordsetSelect의 내용이 변경될 때 setWords의 상태를 변경시켜 줍니다.
   useEffect(() => {
@@ -38,7 +35,6 @@ function List({
       // 그것을 현재 보이는 화면에 출력하도록 설정한다.
       // setWords(wordsetSelect);
       dispatch(wordsChange(wordsetSelect));
-
     }
   }, [wordsetSelect]);
 
@@ -78,7 +74,8 @@ function List({
       }
     });
     // id 값을 상위컴포넌트, 최종적으로는 ModalUpdate와 ModalDelete에 전달하기 위함
-    dispatch(updateIdChange(id))
+    dispatch(updateIdChange(id));
+
   };
 
   // 선택된 항목 바깥 클릭 시 선택 해제
@@ -118,7 +115,11 @@ function List({
           .join(' '); // 공백을 포함시켜주어야 클래스명이 올바르게 동작 그렇지 않으면 클래스 사이에 쉼표처리됨
 
         return (
-          <div className={classes} onClick={() => handleClick(word.id)} key={i}>
+          <div
+            className={classes}
+            onClick={() => handleClick(word.id)}
+            key={i}
+          >
             {!isOpposit && (
               <div className="list_top">
                 <div className="list_left">{word.left}</div>
@@ -137,10 +138,16 @@ function List({
                   className="list_bottom"
                   onClick={(event) => event.stopPropagation()}
                 >
-                  <button className="btn_list" onClick={()=>dispatch(modalWordModToggle(true))}>
+                  <button
+                    className="btn_list"
+                    onClick={() => dispatch(modalWordModToggle(true))}
+                  >
                     Update
                   </button>
-                  <button className="btn_list" onClick={()=>dispatch(modalWordDelToggle(true))}>
+                  <button
+                    className="btn_list"
+                    onClick={() => dispatch(modalWordDelToggle(true))}
+                  >
                     Delete
                   </button>
                 </div>

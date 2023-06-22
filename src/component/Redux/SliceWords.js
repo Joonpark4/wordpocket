@@ -35,3 +35,4 @@ const wordsSlice = createSlice({
 });
 export default wordsSlice;
 export const { wordsChange } = wordsSlice.actions;
+export let storedWord
