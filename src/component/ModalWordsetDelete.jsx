@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { wordsetSelectChange } from './Redux/SliceWordsetSelect';
+import { wordsetSelectChange } from './Redux/SliceWordset';
 import { wordsetListChange } from './Redux/SliceWordsetList';
 import { wordsetIdxChange } from './Redux/SliceWordsetIdx';
 import { modalWordsetDelToggle } from './Redux/SliceModalWordsetDel';
@@ -13,7 +13,7 @@ export default function ModalWordsetDelete() {
 
   // 리덕스 툴킷 사용 (선택된 워드셋과 변경, 이전 이름 listSelect)
   const wordsetSelect = useSelector((state) => {
-    return state.wordsetSelect.value;
+    return state.wordset.value;
   });
 
   // 리덕스 툴킷 사용 (워드셋 리스트, 이전 이름 options)

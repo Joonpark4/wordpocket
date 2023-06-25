@@ -2,7 +2,7 @@
 import React from 'react';
 import { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { wordsChange } from './Redux/SliceWords';
+import { wordsChange } from './Redux/SliceWordset';
 import { modalWordModToggle } from './Redux/SliceModalWordMod';
 import { modalWordDelToggle } from './Redux/SliceModalWordDel';
 import { updateIdChange } from './Redux/SliceUpdateId';
@@ -12,14 +12,14 @@ function List({ isHiding, isOpposit }) {
 
   // 리덕스 툴킷 사용 (선택된 워드셋과 변경, 이전 이름 listSelect)
   const wordsetSelect = useSelector((state) => {
-    return state.wordsetSelect.value;
+    return state.wordset.value;
   });
 
   // 리덕스 툴킷 사용 (워드 리스트, 이전 이름 words)
   const wordsR = useSelector((state) => {
-    return state.wordsR.value;
+    return state.wordset.words;
   });
-
+ /** 리덕스 상태관리로 이 부분을 처리함
   // 현재 선택된 리스트 wordsetSelect의 내용이 변경될 때 setWords의 상태를 변경시켜 줍니다.
   useEffect(() => {
     // 기본적으로 wordsetSelect 변수의 이름과 같은(현재 선택된) 배열을 storedWords 변수에 넣습니다.
@@ -37,6 +37,7 @@ function List({ isHiding, isOpposit }) {
       dispatch(wordsChange(wordsetSelect));
     }
   }, [wordsetSelect]);
+   */
 
   // 변수 words 가 변경될때마다 words의 배열값을 로컬스토리지에 저장시킨다.
   useEffect(() => {
@@ -77,6 +78,9 @@ function List({ isHiding, isOpposit }) {
     dispatch(updateIdChange(id));
 
   };
+  useEffect(()=>{
+    console.log(typeof(wordsR));
+  })
 
   // 선택된 항목 바깥 클릭 시 선택 해제
   // useEffect 정리 : 이 훅은 React 컴포넌트가 렌더링될 때마다, 반환될 때마다, 또는 의존성 목록의 변수가 변경될 때마다 부수 효과(side effect)를 수행합니다. 여기서는 의존성 목록([])이 빈 배열이므로, useEffect 내부의 함수는 컴포넌트가 마운트될 때만 실행되며, 반환되는 함수는 언마운트될 때 실행됩니다.

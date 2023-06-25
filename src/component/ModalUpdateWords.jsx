@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { wordsChange } from './Redux/SliceWords';
+import { wordsChange } from './Redux/SliceWordset';
 import { modalWarnToggle } from './Redux/SliceModalWarn';
 import { warnFuncChange } from './Redux/SliceWarnFunc';
 import { modalWordModToggle } from './Redux/SliceModalWordMod';
@@ -14,7 +14,7 @@ export default function ModalUpdateWords({}) {
 
   // 리덕스 툴킷 사용 (워드 리스트, 이전 이름 words)
   const wordsR = useSelector((state) => {
-    return state.wordsR.value;
+    return state.wordset.words;
   });
 
   // 리덕스 툴킷 사용 (단어수정 모달, 이전 이름 modalUpdateWord)

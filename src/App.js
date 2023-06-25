@@ -9,7 +9,7 @@ import ModalDeleteWords from './component/ModalDeleteWords';
 import ModalWordsetAddMod from './component/ModalWordsetAddMod';
 import ModalWordsetDelete from './component/ModalWordsetDelete';
 import { useDispatch, useSelector } from 'react-redux';
-import { wordsetSelectChange } from './component/Redux/SliceWordsetSelect';
+import { wordsetSelectChange } from './component/Redux/SliceWordset';
 import { warnFuncChange } from './component/Redux/SliceWarnFunc';
 import { modalWarnToggle } from './component/Redux/SliceModalWarn';
 import { modalWordAddToggle } from './component/Redux/SliceModalWordAdd';
@@ -26,7 +26,7 @@ function App() {
 
   // 리덕스 툴킷 사용 (선택된 워드셋과 변경, 이전 이름 listSelect)
   const wordsetSelect = useSelector((state) => {
-    return state.wordsetSelect.value;
+    return state.wordset.value;
   });
 
   // 리덕스 툴킷 사용 (워드셋 리스트, 이전 이름 options)
@@ -198,9 +198,9 @@ function App() {
         <div
           className="btn"
           onClick={() => {
-            // setTap('Test')
-            dispatch(warnFuncChange('NOT_WORKING'));
-            dispatch(modalWarnToggle(true));
+            setTap('Test')
+            // dispatch(warnFuncChange('NOT_WORKING'));
+            // dispatch(modalWarnToggle(true));
           }}
         >
           Test

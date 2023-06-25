@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { wordsetSelectChange } from './Redux/SliceWordsetSelect';
+import { wordsetSelectChange } from './Redux/SliceWordset';
 import { wordsetListChange } from './Redux/SliceWordsetList';
 import { modalWarnToggle } from './Redux/SliceModalWarn';
 import { warnFuncChange } from './Redux/SliceWarnFunc';
@@ -15,7 +15,7 @@ export default function ModalWordsetAddMod({ isAddWordset }) {
 
   // 리덕스 툴킷 사용 (선택된 워드셋과 변경, 이전 이름 listSelect)
   const wordsetSelect = useSelector((state) => {
-    return state.wordsetSelect.value;
+    return state.wordset.value;
   });
 
   // 리덕스 툴킷 사용 (워드셋 리스트, 이전 이름 options)
@@ -25,7 +25,7 @@ export default function ModalWordsetAddMod({ isAddWordset }) {
 
   // 리덕스 툴킷 사용 (워드 리스트, 이전 이름 words)
   const wordsR = useSelector((state) => {
-    return state.wordsR.value;
+    return state.wordset.words;
   });
 
   // 리덕스 툴킷 사용 (워드셋 인덱스체크, 이전 이름 editIdx)
@@ -104,6 +104,9 @@ export default function ModalWordsetAddMod({ isAddWordset }) {
 
   // 워드셋
   const clickWordsetAddMod = () => {
+    wordsR.map((word,i)=>{
+      console.log(word);
+    })
     if (isAddWordset) {
       // 만약 텍스트박스에 공백이 없을 경우
       if (wordsetName !== '') {

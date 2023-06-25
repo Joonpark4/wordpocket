@@ -2,7 +2,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { wordsChange } from './Redux/SliceWords';
+import { wordsChange } from './Redux/SliceWordset';
 import { modalWordDelToggle } from './Redux/SliceModalWordDel';
 
 export default function ModalDeleteWords() {
@@ -11,7 +11,7 @@ export default function ModalDeleteWords() {
 
   // 리덕스 툴킷 사용 (워드 리스트, 이전 이름 words)
   const wordsR = useSelector((state) => {
-    return state.wordsR.value;
+    return state.wordset.words;
   });
 
   // 리덕스 툴킷 사용 (단어삭제 모달, 이전 이름 modalDeleteWord)
