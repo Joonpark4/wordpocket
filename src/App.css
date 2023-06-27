@@ -128,6 +128,34 @@ div {
   overflow-y: scroll;
 }
 
+.pageTypingTest{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.TypingTestUp, .TypingTestDown{
+  margin: 20px;
+  text-align: center;
+}
+.TypingTestQuestion, .TypingTestAnswer{
+  margin-top: 2%;
+  width: 97%;
+  height: calc(35px + 1vw);
+  text-align: center;
+  font-size: calc(30px + 1vw);
+  border: 3px solid black;
+  padding: 1%;
+}
+.TypingTestQuestion{
+  border: none;
+  outline: none;
+}
+.TypingTestText{
+  font-size: larger;
+  font-weight: bolder;
+}
+
 .bottom_option {
   height: 8%;
   border: none;
@@ -181,10 +209,6 @@ div {
   box-shadow: inset -.2rem -0.2rem .1rem gray;
 }
 
-/* .btn_option:hover{
-  transform: scale(105%);
-  
-} */
 .btn_pushed {
   box-shadow: inset .2rem .2rem .2rem gray, inset -.2rem -.2rem .4rem #BEC5D0;
 }

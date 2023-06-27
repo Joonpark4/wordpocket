@@ -16,6 +16,7 @@ import { modalWordAddToggle } from './component/Redux/SliceModalWordAdd';
 import { wordsetIdxChange } from './component/Redux/SliceWordsetIdx';
 import { modalWordsetAMToggle } from './component/Redux/SliceModalWordsetAddMod';
 import { modalWordsetDelToggle } from './component/Redux/SliceModalWordsetDel';
+import TypingTest from './component/TypingTest';
 
 function App() {
   // 탭 선택
@@ -50,20 +51,71 @@ function App() {
   let top_option;
   if (tap === 'List') {
   }
-  
+
   // 탭에 따른 섹션 내용 변경
   let section;
   if (tap === 'List') {
-    section = (
-      <List
-        isHiding={isHiding}
-        isOpposit={isOpposit}
-      />
-    );
+    section = <List isHiding={isHiding} isOpposit={isOpposit} />;
   } else if (tap === 'Test') {
-    section = <div className="warning">Test 탭은 준비중입니다.</div>;
+    section = <TypingTest />;
   } else if (tap === 'Online') {
     section = <div className="warning">Online 탭은 준비중입니다.</div>;
+  }
+
+  // 탭에 따른 하단 옵션바 내용 변경
+  let bottom_option;
+  if (tap === 'List') {
+    bottom_option = (
+        <div>
+          <div className={hidingClass} onClick={() => setIsHiding(!isHiding)}>
+            Hide
+            <br />
+            Meaning
+          </div>
+          <div
+            className={oppositClass}
+            onClick={() => {
+              setIsOpposit(!isOpposit);
+            }}
+          >
+            Opposite
+          </div>
+          <div
+            className="btn_option list_option"
+            onClick={() => dispatch(modalWordAddToggle(true))}
+          >
+            Add
+            <br />
+            Words
+          </div>
+          <div
+            className="btn_option list_option"
+            onClick={() => {
+              dispatch(warnFuncChange('NOT_WORKING'));
+              dispatch(modalWarnToggle(true));
+            }}
+          >
+            Update
+            <br />
+            List
+          </div>
+        </div>
+    );
+  } else if(tap === 'Test'){
+    bottom_option = (
+      <div>
+          <div className='btn_option list_option'>
+            Typing
+            <br />
+            Test
+          </div>
+          <div className='btn_option list_option'>
+            Rain
+            <br />
+            Drop
+          </div>
+        </div>
+    )
   }
 
   // 이름을 지을건지 수정할건지 체크
@@ -73,7 +125,6 @@ function App() {
   useEffect(() => {
     localStorage.setItem('Wordset', JSON.stringify(wordsetLists));
   }, [wordsetLists]);
-
 
   return (
     <div className="App">
@@ -148,42 +199,8 @@ function App() {
       <div className="section">{section}</div>
 
       {/* 하단옵션바 */}
-      <div className={'bottom_option'}>
-        <div>
-          <div className={hidingClass} onClick={() => setIsHiding(!isHiding)}>
-            Hide
-            <br />
-            Meaning
-          </div>
-          <div
-            className={oppositClass}
-            onClick={() => {
-              setIsOpposit(!isOpposit);
-            }}
-          >
-            Opposite
-          </div>
-          <div
-            className="btn_option list_option"
-            onClick={() => dispatch(modalWordAddToggle(true))}
-          >
-            Add
-            <br />
-            Words
-          </div>
-          <div
-            className="btn_option list_option"
-            onClick={() => {
-              dispatch(warnFuncChange('NOT_WORKING'));
-              dispatch(modalWarnToggle(true));
-            }}
-          >
-            Update
-            <br />
-            List
-          </div>
-        </div>
-      </div>
+      
+      <div className={'bottom_option'}>{bottom_option}</div>
 
       {/* 탭 페이지 */}
       <div className="tap_page">
@@ -198,7 +215,7 @@ function App() {
         <div
           className="btn"
           onClick={() => {
-            setTap('Test')
+            setTap('Test');
             // dispatch(warnFuncChange('NOT_WORKING'));
             // dispatch(modalWarnToggle(true));
           }}
@@ -218,8 +235,8 @@ function App() {
 
       <ModalOkay />
       <ModalAddWords />
-      <ModalUpdateWords/>
-      <ModalDeleteWords/>
+      <ModalUpdateWords />
+      <ModalDeleteWords />
       <ModalWordsetAddMod isAddWordset={isAddWordset} />
       <ModalWordsetDelete />
     </div>

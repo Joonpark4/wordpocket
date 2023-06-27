@@ -30,6 +30,7 @@ export default function ModalUpdateWords({}) {
   const [updateLeft, setUpdateLeft] = useState("");
   const [updateRight, setUpdateRight] = useState("");
 
+
   // 첫 렌더링을 막기위한 useRef 사용. useEffect로 첫렌더링을 하게되니 words[updateId-1]에 left값이 없다고 난리다 난리
   const isFirstRender = useRef(true);
 
