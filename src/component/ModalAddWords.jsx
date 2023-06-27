@@ -101,7 +101,6 @@ export default function ModalAddWords() {
       dispatch(warnFuncChange("WORD_ADD_BLANK"))
       dispatch(modalWarnToggle(true))
     }
-    console.log(wordsR);
   }
 
   return (

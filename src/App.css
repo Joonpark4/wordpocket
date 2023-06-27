@@ -135,6 +135,7 @@ div {
   flex-direction: column;
 }
 .TypingTestUp, .TypingTestDown{
+  position:relative;
   margin: 20px;
   text-align: center;
 }
@@ -143,13 +144,23 @@ div {
   width: 97%;
   height: calc(35px + 1vw);
   text-align: center;
-  font-size: calc(30px + 1vw);
-  border: 3px solid black;
+  font-size: calc(25px + 1vw);
+  border: 3px dotted black;
+  outline: none;
   padding: 1%;
+  font-weight: bolder;
 }
 .TypingTestQuestion{
   border: none;
-  outline: none;
+  background-color: white;
+  color: navy;
+}
+.TypingTestSubmit{
+  margin-top: 3%;
+  height: calc(35px + 1vw);
+  width: 99%;
+  font-size: larger;
+  font-weight: bolder;
 }
 .TypingTestText{
   font-size: larger;

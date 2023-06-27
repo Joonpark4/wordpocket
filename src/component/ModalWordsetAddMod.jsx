@@ -104,9 +104,6 @@ export default function ModalWordsetAddMod({ isAddWordset }) {
 
   // 워드셋
   const clickWordsetAddMod = () => {
-    wordsR.map((word,i)=>{
-      console.log(word);
-    })
     if (isAddWordset) {
       // 만약 텍스트박스에 공백이 없을 경우
       if (wordsetName !== '') {
@@ -172,7 +169,6 @@ export default function ModalWordsetAddMod({ isAddWordset }) {
         type="text"
         onChange={(e) => {
           setWordsetName(e.target.value);
-          console.log(wordsetName);
         }}
         value={wordsetName}
       />

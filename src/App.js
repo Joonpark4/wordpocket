@@ -16,6 +16,7 @@ import { modalWordAddToggle } from './component/Redux/SliceModalWordAdd';
 import { wordsetIdxChange } from './component/Redux/SliceWordsetIdx';
 import { modalWordsetAMToggle } from './component/Redux/SliceModalWordsetAddMod';
 import { modalWordsetDelToggle } from './component/Redux/SliceModalWordsetDel';
+import { questionIdxChange } from './component/Redux/SliceQuestionIdx';
 import TypingTest from './component/TypingTest';
 
 function App() {
@@ -47,6 +48,20 @@ function App() {
     .filter(Boolean)
     .join(' ');
 
+  // 뜻 테스트 변경 토글
+  const [isMeaning, setIsMeaning] = useState(true);
+  let testMeaningClass = [
+    'btn_option list_option',
+    isMeaning ? 'btn_pushed' : null,
+  ]
+    .filter(Boolean)
+    .join(' ');
+  // 단어 테스트 변경 토글
+  const [isWord, setIsWord] = useState(false);
+  let testWordClass = ['btn_option list_option', isWord ? 'btn_pushed' : null]
+    .filter(Boolean)
+    .join(' ');
+
   // 탭에 따른 상단 옵션바 내용 변경
   let top_option;
   if (tap === 'List') {
@@ -66,56 +81,68 @@ function App() {
   let bottom_option;
   if (tap === 'List') {
     bottom_option = (
-        <div>
-          <div className={hidingClass} onClick={() => setIsHiding(!isHiding)}>
-            Hide
-            <br />
-            Meaning
-          </div>
-          <div
-            className={oppositClass}
-            onClick={() => {
-              setIsOpposit(!isOpposit);
-            }}
-          >
-            Opposite
-          </div>
-          <div
-            className="btn_option list_option"
-            onClick={() => dispatch(modalWordAddToggle(true))}
-          >
-            Add
-            <br />
-            Words
-          </div>
-          <div
-            className="btn_option list_option"
-            onClick={() => {
-              dispatch(warnFuncChange('NOT_WORKING'));
-              dispatch(modalWarnToggle(true));
-            }}
-          >
-            Update
-            <br />
-            List
-          </div>
+      <div>
+        <div className={hidingClass} onClick={() => setIsHiding(!isHiding)}>
+          Hide
+          <br />
+          Meaning
         </div>
+        <div
+          className={oppositClass}
+          onClick={() => {
+            setIsOpposit(!isOpposit);
+          }}
+        >
+          Opposite
+        </div>
+        <div
+          className="btn_option list_option"
+          onClick={() => dispatch(modalWordAddToggle(true))}
+        >
+          Add
+          <br />
+          Words
+        </div>
+        <div
+          className="btn_option list_option"
+          onClick={() => {
+            dispatch(warnFuncChange('NOT_WORKING'));
+            dispatch(modalWarnToggle(true));
+          }}
+        >
+          Update
+          <br />
+          List
+        </div>
+      </div>
     );
-  } else if(tap === 'Test'){
+  } else if (tap === 'Test') {
     bottom_option = (
       <div>
-          <div className='btn_option list_option'>
-            Typing
-            <br />
-            Test
-          </div>
-          <div className='btn_option list_option'>
-            Rain
-            <br />
-            Drop
-          </div>
+        <div
+          className={testMeaningClass}
+          onClick={() => {
+            setIsMeaning(!isMeaning);
+            setIsWord(false);
+          }}
+        >
+          Typing
+          <br />
+          Meaning
         </div>
-    )
+        <div
+          className={testWordClass}
+          onClick={() => {
+            setIsWord(!isWord);
+            setIsMeaning(false);
+          }}
+        >
+          Typing
+          <br />
+          Word
+        </div>
+      </div>
+    );
   }
 
   // 이름을 지을건지 수정할건지 체크
@@ -139,6 +166,7 @@ function App() {
             name="listname"
             id="listname"
             onChange={(e) => {
+              dispatch(questionIdxChange());
               dispatch(wordsetSelectChange(e.target.value));
               dispatch(wordsetIdxChange(wordsetLists.indexOf(e.target.value)));
             }}
@@ -199,7 +227,7 @@ function App() {
       <div className="section">{section}</div>
 
       {/* 하단옵션바 */}
-      
+
       <div className={'bottom_option'}>{bottom_option}</div>
 
       {/* 탭 페이지 */}
