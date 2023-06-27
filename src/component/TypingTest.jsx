@@ -5,6 +5,7 @@ import { wordsChange, wordsetSelectChange } from './Redux/SliceWordset';
 import { modalWarnToggle } from './Redux/SliceModalWarn';
 import { warnFuncChange } from './Redux/SliceWarnFunc';
 import { questionIdxUp, questionIdxChange } from './Redux/SliceQuestionIdx';
+import { tapList } from './Redux/SliceTap';
 
 export default function TypingTest({ isMeaning }) {
   // 리덕스 툴킷 리모콘 사용
@@ -78,9 +79,9 @@ export default function TypingTest({ isMeaning }) {
 
   // 선택된 워드셋 안에 단어 갯수가 1보다 작다면 선택 불가
   if (wordsR.length < 1) {
+    dispatch(tapList());
     dispatch(modalWarnToggle(true));
     dispatch(warnFuncChange('WORDSET_NO_WORDS'));
-    dispatch(wordsetSelectChange('Default Wordset'));
   }
 
   return (
@@ -91,11 +92,12 @@ export default function TypingTest({ isMeaning }) {
           type="text"
           className="TypingTestQuestion"
           // 아래는 isMeaning 값이 true 혹은 false 임에 따라 단어를 보고 뜻을 입력할지, 단어의 뜻을 보고 단어를 입력할지 정할 수 있다.
+          // 또한 에러를 방지하기 위해 만약 현재 선택된 워드셋에 단어가 0보다 큰 경우에만 값을 가져오고, 아니면 공백으로 비워둔다.
+          // 공백으로 비우는건 단순 에러를 피하기 위함, 즉시 워드셋에 단어가 없어도 상관없는 List단계로 넘어가기 때문에 치명적 오류를 피할 수 있다.
           value={
-            // wordsR.length > 0 && questionIdx < wordsR.length
-            //   ? wordsR[questionIdx].left
-            //   : ''
-            isMeaning ? wordsR[questionIdx].left : wordsR[questionIdx].right
+            wordsR.length > 0 && questionIdx < wordsR.length
+              ? isMeaning ? wordsR[questionIdx].left : wordsR[questionIdx].right
+              : ''
           }
           disabled={true}
         />

@@ -17,12 +17,10 @@ import { wordsetIdxChange } from './component/Redux/SliceWordsetIdx';
 import { modalWordsetAMToggle } from './component/Redux/SliceModalWordsetAddMod';
 import { modalWordsetDelToggle } from './component/Redux/SliceModalWordsetDel';
 import { questionIdxChange } from './component/Redux/SliceQuestionIdx';
+import { tapList, tapTest, tapOnline } from './component/Redux/SliceTap';
 import TypingTest from './component/TypingTest';
 
 function App() {
-  // 탭 선택
-  const [tap, setTap] = useState('List');
-
   // 리덕스 툴킷 사용 (리모콘)
   const dispatch = useDispatch();
 
@@ -34,6 +32,11 @@ function App() {
   // 리덕스 툴킷 사용 (워드셋 리스트, 이전 이름 options)
   const wordsetLists = useSelector((state) => {
     return state.wordsetList.value;
+  });
+
+  // 리덕스 툴킷 사용 (워드셋 리스트, 이전 이름 options)
+  const tap = useSelector((state) => {
+    return state.tap.value;
   });
 
   // 단어 숨김 토글
@@ -235,7 +238,7 @@ function App() {
         <div
           className="btn"
           onClick={() => {
-            setTap('List');
+            dispatch(tapList());
           }}
         >
           List
@@ -243,7 +246,8 @@ function App() {
         <div
           className="btn"
           onClick={() => {
-            setTap('Test');
+            dispatch(tapTest());
+            // setTap('Test');
             // dispatch(warnFuncChange('NOT_WORKING'));
             // dispatch(modalWarnToggle(true));
           }}

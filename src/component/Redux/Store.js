@@ -11,6 +11,7 @@ import modalWordsetDelSlice from './SliceModalWordsetDel';
 import updateIdSlice from './SliceUpdateId';
 import wordsetSlice from './SliceWordset';
 import questionIdxSlice from './SliceQuestionIdx';
+import tapSlice from './SliceTap';
 
 const store = configureStore({
   reducer: {
@@ -25,7 +26,8 @@ const store = configureStore({
   modalWordsetAM : modalWordsetAMSlice.reducer,
   modalWordsetDel : modalWordsetDelSlice.reducer,
   wordset: wordsetSlice.reducer,
-  questionIdx : questionIdxSlice.reducer
+  questionIdx : questionIdxSlice.reducer,
+  tap : tapSlice.reducer,
 },
 });
 export default store;
