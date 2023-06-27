@@ -32,6 +32,9 @@ div {
   height: 5%;
   background-color: lightgrey;
   overflow: hidden;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* 투명 */
+  -moz-appearance: none;
+  -webkit-appearance: none;
 }
 
 .top_option>form {
@@ -67,6 +70,9 @@ div {
   padding: 10px 30px 10px 20px;
   font-size: calc(15px + 1vw);
   cursor: pointer;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* 투명 */
+  -moz-appearance: none;
+  -webkit-appearance: none;
 }
 
 .list:first-child {
@@ -107,6 +113,9 @@ div {
   border-right: none;
   cursor: pointer;
   padding: 1vh;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* 투명 */
+  -moz-appearance: none;
+  -webkit-appearance: none;
 }
 
 .btn_list:last-child {
@@ -198,6 +207,9 @@ div {
   border: 3px solid gray;
   border-right: none;
   cursor: pointer;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* 투명 */
+  -moz-appearance: none;
+  -webkit-appearance: none;
 }
 
 .btn:last-child {
@@ -218,10 +230,16 @@ div {
   font-size: 13px;
   transition: 200ms;
   box-shadow: inset -.2rem -0.2rem .1rem gray;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* 투명 */
+  -moz-appearance: none;
+  -webkit-appearance: none;
 }
 
 .btn_pushed {
   box-shadow: inset .2rem .2rem .2rem gray, inset -.2rem -.2rem .4rem #BEC5D0;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* 투명 */
+  -moz-appearance: none;
+  -webkit-appearance: none;
 }
 
 .btn_option:last-child {
