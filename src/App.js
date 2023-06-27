@@ -72,7 +72,7 @@ function App() {
   if (tap === 'List') {
     section = <List isHiding={isHiding} isOpposit={isOpposit} />;
   } else if (tap === 'Test') {
-    section = <TypingTest />;
+    section = <TypingTest isMeaning={isMeaning} />;
   } else if (tap === 'Online') {
     section = <div className="warning">Online 탭은 준비중입니다.</div>;
   }

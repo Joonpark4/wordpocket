@@ -6,7 +6,7 @@ import { modalWarnToggle } from './Redux/SliceModalWarn';
 import { warnFuncChange } from './Redux/SliceWarnFunc';
 import { questionIdxUp, questionIdxChange } from './Redux/SliceQuestionIdx';
 
-export default function TypingTest() {
+export default function TypingTest({ isMeaning }) {
   // 리덕스 툴킷 리모콘 사용
   const dispatch = useDispatch();
 
@@ -42,13 +42,21 @@ export default function TypingTest() {
     event.preventDefault();
     clickSubmit();
   };
-
   // 클릭됐을 경우에 일어날 일
   const clickSubmit = () => {
-    let newTbAnswer = tbAnswer.trim();
-    console.log(newTbAnswer.toLowerCase());
-    console.log(wordsR[questionIdx].right.toLowerCase());
-    if (newTbAnswer.toLowerCase() === wordsR[questionIdx].right.toLowerCase()) {
+    // 답안의 공백을 모두 없애고, 소문자로 변경
+    let newTbAnswer = tbAnswer.replace(/(\s*)/g, '').toLowerCase();
+
+    // 정답의 공백을 모두 없애고, 소문자로 변경 만약 isMeaning이 참이면 right 비교, 거짓이면 left 비교
+    let newWordsR;
+    if (isMeaning == true) {
+      newWordsR = wordsR[questionIdx].right.replace(/(\s*)/g, '').toLowerCase();
+    } else {
+      newWordsR = wordsR[questionIdx].left.replace(/(\s*)/g, '').toLowerCase();
+    }
+    console.log(newTbAnswer);
+    console.log(newWordsR);
+    if (newTbAnswer === newWordsR) {
       alert('정답입니다.');
       setTbAnswer('');
       focusOn();
@@ -65,13 +73,8 @@ export default function TypingTest() {
       focusOn();
     }
   };
-  const test = () => {
-    if (questionIdx < wordsR.length - 1) {
-      dispatch(questionIdxUp());
-    } else {
-      dispatch(questionIdxChange());
-    }
-  };
+
+  console.log(isMeaning);
 
   // 선택된 워드셋 안에 단어 갯수가 1보다 작다면 선택 불가
   if (wordsR.length < 1) {
@@ -87,11 +90,12 @@ export default function TypingTest() {
         <input
           type="text"
           className="TypingTestQuestion"
-          // 아래는 wordR의 길이가 0보다 크고, questionIdx보다 작을 경우에만 불러오는 로직이다.
+          // 아래는 isMeaning 값이 true 혹은 false 임에 따라 단어를 보고 뜻을 입력할지, 단어의 뜻을 보고 단어를 입력할지 정할 수 있다.
           value={
-            wordsR.length > 0 && questionIdx < wordsR.length
-              ? wordsR[questionIdx].left
-              : ''
+            // wordsR.length > 0 && questionIdx < wordsR.length
+            //   ? wordsR[questionIdx].left
+            //   : ''
+            isMeaning ? wordsR[questionIdx].left : wordsR[questionIdx].right
           }
           disabled={true}
         />

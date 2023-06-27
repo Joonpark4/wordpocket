@@ -33,7 +33,6 @@ export default function ModalUpdateWords({}) {
 
   // 첫 렌더링을 막기위한 useRef 사용. useEffect로 첫렌더링을 하게되니 words[updateId-1]에 left값이 없다고 난리다 난리
   const isFirstRender = useRef(true);
-
   // 처음엔 인덱스가 바뀌는 것으로 단어와 뜻의 텍스트변경조건을 삼았으나 그럴 경우 다른 리스트에서 같은 인덱스의 경우 한번에 값이 바뀌지 않고 이전값이 그대로 있어, 모달이 켜지고 꺼지는 상황에서 텍스트 변경조건을 삼았다.
   useEffect(()=>{
     if (isFirstRender.current) {
