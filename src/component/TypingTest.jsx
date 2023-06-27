@@ -38,6 +38,26 @@ export default function TypingTest({ isMeaning }) {
   // 정답 텍스트박스
   const [tbAnswer, setTbAnswer] = useState('');
 
+  // 정답이미지 보여주기
+  const [correctImage, setCorrectImage] = useState(false);
+
+  const showCorrectImg = () => {
+    setCorrectImage(true);
+    setTimeout(() => {
+      setCorrectImage(false);
+    }, 900); // 이미지 표시 후 1초(1000 밀리초) 후에 이미지를 사라지게 합니다.
+  };
+  
+  // 오답이미지 보여주기
+  const [inCorrectImage, setInCorrectImage] = useState(false);
+
+  const showInCorrectImg = () => {
+    setInCorrectImage(true);
+    setTimeout(() => {
+      setInCorrectImage(false);
+    }, 900); // 이미지 표시 후 1초(1000 밀리초) 후에 이미지를 사라지게 합니다.
+  };
+
   // 서브밋(엔터 및 클릭 모두 해당)
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -58,7 +78,8 @@ export default function TypingTest({ isMeaning }) {
     console.log(newTbAnswer);
     console.log(newWordsR);
     if (newTbAnswer === newWordsR) {
-      alert('정답입니다.');
+      // alert('정답입니다.');
+      showCorrectImg();
       setTbAnswer('');
       focusOn();
       if (questionIdx < wordsR.length - 1) {
@@ -69,13 +90,11 @@ export default function TypingTest({ isMeaning }) {
         dispatch(questionIdxChange());
       }
     } else {
-      alert('오답입니다.');
+      showInCorrectImg();
       setTbAnswer('');
       focusOn();
     }
   };
-
-  console.log(isMeaning);
 
   // 선택된 워드셋 안에 단어 갯수가 1보다 작다면 선택 불가
   if (wordsR.length < 1) {
@@ -96,13 +115,31 @@ export default function TypingTest({ isMeaning }) {
           // 공백으로 비우는건 단순 에러를 피하기 위함, 즉시 워드셋에 단어가 없어도 상관없는 List단계로 넘어가기 때문에 치명적 오류를 피할 수 있다.
           value={
             wordsR.length > 0 && questionIdx < wordsR.length
-              ? isMeaning ? wordsR[questionIdx].left : wordsR[questionIdx].right
+              ? isMeaning
+                ? wordsR[questionIdx].left
+                : wordsR[questionIdx].right
               : ''
           }
           disabled={true}
         />
       </div>
       <div className="TypingTestDown">
+        {/* 아래는 정답 이미지 */}
+        {correctImage && (
+          <img
+            src={`${process.env.PUBLIC_URL}/checked.png`}
+            alt="Checked"
+            className="checked-image"
+          />
+        )}
+        {/* 아래는 오답 이미지 */}
+        {inCorrectImage && (
+          <img
+            src={`${process.env.PUBLIC_URL}/cancel.png`}
+            alt="Cancel"
+            className="cancel-image"
+          />
+        )}
         <span className="TypingTestText">Answer : </span>
         <form onSubmit={handleSubmit}>
           <input
