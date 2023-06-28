@@ -3,8 +3,8 @@ import React from 'react';
 import { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { wordsChange } from './Redux/SliceWordset';
-import { modalWordModToggle } from './Redux/SliceModalWordMod';
-import { modalWordDelToggle } from './Redux/SliceModalWordDel';
+import { modalWordModToggle } from './Redux/SliceModal';
+import { modalWordDelToggle } from './Redux/SliceModal';
 import { updateIdChange } from './Redux/SliceUpdateId';
 
 function List({ isHiding, isOpposit }) {

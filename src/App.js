@@ -11,11 +11,11 @@ import ModalWordsetDelete from './component/ModalWordsetDelete';
 import { useDispatch, useSelector } from 'react-redux';
 import { wordsetSelectChange } from './component/Redux/SliceWordset';
 import { warnFuncChange } from './component/Redux/SliceWarnFunc';
-import { modalWarnToggle } from './component/Redux/SliceModalWarn';
-import { modalWordAddToggle } from './component/Redux/SliceModalWordAdd';
+import { modalWarnToggle } from './component/Redux/SliceModal';
+import { modalWordAddToggle } from './component/Redux/SliceModal';
 import { wordsetIdxChange } from './component/Redux/SliceWordsetIdx';
-import { modalWordsetAMToggle } from './component/Redux/SliceModalWordsetAddMod';
-import { modalWordsetDelToggle } from './component/Redux/SliceModalWordsetDel';
+import { modalWordsetAMToggle } from './component/Redux/SliceModal';
+import { modalWordsetDelToggle } from './component/Redux/SliceModal';
 import { questionIdxChange } from './component/Redux/SliceQuestionIdx';
 import { tapList, tapTest, tapOnline } from './component/Redux/SliceTap';
 import TypingTest from './component/TypingTest';
@@ -126,7 +126,7 @@ function App() {
           className={testMeaningClass}
           onClick={() => {
             setIsMeaning(!isMeaning);
-            setIsWord(false);
+            setIsWord(!isWord);
           }}
         >
           Typing
@@ -137,7 +137,7 @@ function App() {
           className={testWordClass}
           onClick={() => {
             setIsWord(!isWord);
-            setIsMeaning(false);
+            setIsMeaning(!isMeaning);
           }}
         >
           Typing

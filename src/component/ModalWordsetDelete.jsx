@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { wordsetSelectChange } from './Redux/SliceWordset';
 import { wordsetListChange } from './Redux/SliceWordsetList';
 import { wordsetIdxChange } from './Redux/SliceWordsetIdx';
-import { modalWordsetDelToggle } from './Redux/SliceModalWordsetDel';
+import { modalWordsetDelToggle } from './Redux/SliceModal';
 
 export default function ModalWordsetDelete() {
   // 리덕스 툴킷 사용 (리모콘)
@@ -27,7 +27,7 @@ export default function ModalWordsetDelete() {
   });
 
   const modalWordsetDel = useSelector((state) => {
-    return state.modalWordsetDel.value;
+    return state.modal.wordsetdel;
   });
 
   const style = {

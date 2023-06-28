@@ -1,17 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import wordsetListSlice from './SliceWordsetList';
 import warnFuncSlice from './SliceWarnFunc';
-import modalWarnSlice from './SliceModalWarn';
-import modalWordAddSlice from './SliceModalWordAdd';
 import wordsetIdxSlice from './SliceWordsetIdx';
-import modalWordModSlice from './SliceModalWordMod';
-import modalWordDelSlice from './SliceModalWordDel';
-import modalWordsetAMSlice from './SliceModalWordsetAddMod';
-import modalWordsetDelSlice from './SliceModalWordsetDel';
 import updateIdSlice from './SliceUpdateId';
 import wordsetSlice from './SliceWordset';
 import questionIdxSlice from './SliceQuestionIdx';
 import tapSlice from './SliceTap';
+import modalSlice from './SliceModal';
 
 const store = configureStore({
   reducer: {
@@ -19,15 +14,10 @@ const store = configureStore({
   wordsetIdx: wordsetIdxSlice.reducer,
   updateId: updateIdSlice.reducer,
   warnFunc: warnFuncSlice.reducer,
-  modalWarn: modalWarnSlice.reducer,
-  modalWordAdd : modalWordAddSlice.reducer,
-  modalWordMod : modalWordModSlice.reducer,
-  modalWordDel : modalWordDelSlice.reducer,
-  modalWordsetAM : modalWordsetAMSlice.reducer,
-  modalWordsetDel : modalWordsetDelSlice.reducer,
   wordset: wordsetSlice.reducer,
   questionIdx : questionIdxSlice.reducer,
   tap : tapSlice.reducer,
+  modal : modalSlice.reducer,
 },
 });
 export default store;

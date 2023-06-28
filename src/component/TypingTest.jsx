@@ -1,8 +1,7 @@
 /*eslint-disable*/
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { wordsChange, wordsetSelectChange } from './Redux/SliceWordset';
-import { modalWarnToggle } from './Redux/SliceModalWarn';
+import { modalWarnToggle } from './Redux/SliceModal';
 import { warnFuncChange } from './Redux/SliceWarnFunc';
 import { questionIdxUp, questionIdxChange } from './Redux/SliceQuestionIdx';
 import { tapList } from './Redux/SliceTap';
@@ -45,7 +44,7 @@ export default function TypingTest({ isMeaning }) {
     setCorrectImage(true);
     setTimeout(() => {
       setCorrectImage(false);
-    }, 900); // 이미지 표시 후 1초(1000 밀리초) 후에 이미지를 사라지게 합니다.
+    }, 900); // 이미지 표시 후 0.9초(900 밀리초) 후에 이미지를 사라지게 합니다. 1초로 하니 css와 미묘하게 타이밍이 어긋남
   };
   
   // 오답이미지 보여주기

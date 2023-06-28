@@ -4,10 +4,10 @@ import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { wordsetSelectChange } from './Redux/SliceWordset';
 import { wordsetListChange } from './Redux/SliceWordsetList';
-import { modalWarnToggle } from './Redux/SliceModalWarn';
+import { modalWarnToggle } from './Redux/SliceModal';
 import { warnFuncChange } from './Redux/SliceWarnFunc';
 import { wordsetIdxChange } from './Redux/SliceWordsetIdx';
-import { modalWordsetAMToggle } from './Redux/SliceModalWordsetAddMod';
+import { modalWordsetAMToggle } from './Redux/SliceModal';
 
 export default function ModalWordsetAddMod({ isAddWordset }) {
   // 리덕스 툴킷 사용 (리모콘)
@@ -35,7 +35,7 @@ export default function ModalWordsetAddMod({ isAddWordset }) {
 
   // 리덕스 툴킷 사용 (워드셋 추가 수정 모달, 이전 이름 modalWordsetAddMod)
   const modalWordsetAM = useSelector((state) => {
-    return state.modalWordsetAM.value;
+    return state.modal.wordsetam;
   });
 
   const style = {

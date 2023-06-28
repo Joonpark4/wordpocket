@@ -2,10 +2,10 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { modalWarnToggle } from './Redux/SliceModalWarn';
+import { modalWarnToggle } from './Redux/SliceModal';
 import { warnFuncChange } from './Redux/SliceWarnFunc';
 import { wordsChange } from './Redux/SliceWordset';
-import { modalWordAddToggle } from './Redux/SliceModalWordAdd';
+import { modalWordAddToggle } from './Redux/SliceModal';
 
 export default function ModalAddWords() {
 
@@ -19,7 +19,7 @@ export default function ModalAddWords() {
   
   // 리덕스 툴킷 사용 (단어추가 모달, 이전 이름 modalAddWord)
   const modalWordAdd = useSelector((state) => {
-    return state.modalWordAdd.value;
+    return state.modal.wordadd;
   });
 
   const [id, setId] = useState(wordsR.length);

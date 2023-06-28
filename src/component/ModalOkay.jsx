@@ -2,7 +2,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { modalWarnToggle } from './Redux/SliceModalWarn';
+import { modalWarnToggle } from './Redux/SliceModal';
 
 export default function ModalOkay() {
   // 리덕스 툴킷 리모콘 사용
@@ -15,7 +15,7 @@ export default function ModalOkay() {
 
   // 리덕스 툴킷 사용 (경고창 모달, 이전 이름 modalWarn)
   const modalWarn = useSelector((state) => {
-    return state.modalWarn.value;
+    return state.modal.warn;
   });
 
   const style = {

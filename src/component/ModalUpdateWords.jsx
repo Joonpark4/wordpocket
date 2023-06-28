@@ -3,9 +3,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { wordsChange } from './Redux/SliceWordset';
-import { modalWarnToggle } from './Redux/SliceModalWarn';
+import { modalWarnToggle } from './Redux/SliceModal';
 import { warnFuncChange } from './Redux/SliceWarnFunc';
-import { modalWordModToggle } from './Redux/SliceModalWordMod';
+import { modalWordModToggle } from './Redux/SliceModal';
 
 export default function ModalUpdateWords({}) {
 
@@ -19,7 +19,7 @@ export default function ModalUpdateWords({}) {
 
   // 리덕스 툴킷 사용 (단어수정 모달, 이전 이름 modalUpdateWord)
   const modalWordMod = useSelector((state) => {
-    return state.modalWordMod.value;
+    return state.modal.wordmod;
   });
 
   // 리덕스 툴킷 사용 (업뎃 인덱스, 이전이름 updateId)
