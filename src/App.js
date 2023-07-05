@@ -67,7 +67,72 @@ function App() {
 
   // 탭에 따른 상단 옵션바 내용 변경
   let top_option;
-  if (tap === 'List') {
+  if (tap === 'List' || tap === 'Test') {
+    top_option = (
+      <form action="#">
+        <select
+          className="dropdown"
+          name="listname"
+          id="listname"
+          onChange={(e) => {
+            dispatch(questionIdxChange());
+            dispatch(wordsetSelectChange(e.target.value));
+            dispatch(wordsetIdxChange(wordsetLists.indexOf(e.target.value)));
+          }}
+          value={wordsetSelect}
+        >
+          {wordsetLists.map((option, i) => (
+            <option key={i} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+        <button
+          className="btn_Wordset"
+          id="btn_ListAdd"
+          onClick={(e) => {
+            e.preventDefault();
+            setIsAddWordset(true);
+            dispatch(modalWordsetAMToggle(true));
+          }}
+        >
+          Add List
+        </button>
+        <button
+          className="btn_Wordset"
+          id="btn_ListMod"
+          onClick={(e) => {
+            e.preventDefault();
+            if (wordsetSelect !== 'Default Wordset') {
+              setIsAddWordset(false);
+              dispatch(modalWordsetAMToggle(true));
+            } else {
+              dispatch(warnFuncChange('MOD_DEFAULT'));
+              dispatch(modalWarnToggle(true));
+            }
+          }}
+        >
+          Mod List
+        </button>
+        <button
+          className="btn_Wordset"
+          id="btn_ListDel"
+          onClick={(e) => {
+            e.preventDefault();
+            if (wordsetSelect !== 'Default Wordset') {
+              dispatch(modalWordsetDelToggle(true));
+            } else {
+              dispatch(warnFuncChange('DEL_DEFAULT'));
+              dispatch(modalWarnToggle(true));
+            }
+          }}
+        >
+          Del List
+        </button>
+      </form>
+    );
+  } else {
+    top_option = null;
   }
 
   // 탭에 따른 섹션 내용 변경
@@ -146,6 +211,27 @@ function App() {
         </div>
       </div>
     );
+  } else {
+    bottom_option = (
+      <div>
+        <div className="btn_option list_option">
+          Wordset
+          <br />
+          Download
+        </div>
+        <div className="btn_option list_option">
+          Wordset
+          <br />
+          Upload
+        </div>
+        <div className="btn_option list_option">
+          Board
+        </div>
+        <div className="btn_option list_option">
+          Write
+        </div>
+      </div>
+    );
   }
 
   // 이름을 지을건지 수정할건지 체크
@@ -162,69 +248,7 @@ function App() {
       <div className="black-nav">Word Pocket</div>
 
       {/* 상단옵션바 */}
-      <div className="top_option">
-        <form action="#">
-          <select
-            className="dropdown"
-            name="listname"
-            id="listname"
-            onChange={(e) => {
-              dispatch(questionIdxChange());
-              dispatch(wordsetSelectChange(e.target.value));
-              dispatch(wordsetIdxChange(wordsetLists.indexOf(e.target.value)));
-            }}
-            value={wordsetSelect}
-          >
-            {wordsetLists.map((option, i) => (
-              <option key={i} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-          <button
-            className="btn_Wordset"
-            id="btn_ListAdd"
-            onClick={(e) => {
-              e.preventDefault();
-              setIsAddWordset(true);
-              dispatch(modalWordsetAMToggle(true));
-            }}
-          >
-            Add List
-          </button>
-          <button
-            className="btn_Wordset"
-            id="btn_ListMod"
-            onClick={(e) => {
-              e.preventDefault();
-              if (wordsetSelect !== 'Default Wordset') {
-                setIsAddWordset(false);
-                dispatch(modalWordsetAMToggle(true));
-              } else {
-                dispatch(warnFuncChange('MOD_DEFAULT'));
-                dispatch(modalWarnToggle(true));
-              }
-            }}
-          >
-            Mod List
-          </button>
-          <button
-            className="btn_Wordset"
-            id="btn_ListDel"
-            onClick={(e) => {
-              e.preventDefault();
-              if (wordsetSelect !== 'Default Wordset') {
-                dispatch(modalWordsetDelToggle(true));
-              } else {
-                dispatch(warnFuncChange('DEL_DEFAULT'));
-                dispatch(modalWarnToggle(true));
-              }
-            }}
-          >
-            Del List
-          </button>
-        </form>
-      </div>
+      <div className="top_option">{top_option}</div>
 
       {/* 섹션 */}
       <div className="section">{section}</div>
@@ -247,9 +271,6 @@ function App() {
           className="btn"
           onClick={() => {
             dispatch(tapTest());
-            // setTap('Test');
-            // dispatch(warnFuncChange('NOT_WORKING'));
-            // dispatch(modalWarnToggle(true));
           }}
         >
           Test
@@ -257,8 +278,7 @@ function App() {
         <div
           className="btn"
           onClick={() => {
-            dispatch(warnFuncChange('NOT_WORKING'));
-            dispatch(modalWarnToggle(true));
+            dispatch(tapOnline());
           }}
         >
           Online
