@@ -7,7 +7,7 @@ import { modalWordModToggle } from './Redux/SliceModal';
 import { modalWordDelToggle } from './Redux/SliceModal';
 import { updateIdChange } from './Redux/SliceUpdateId';
 
-function List({ isHiding, isOpposit }) {
+function List() {
   const dispatch = useDispatch();
 
   // 리덕스 툴킷 사용 (선택된 워드셋과 변경, 이전 이름 listSelect)
@@ -19,6 +19,17 @@ function List({ isHiding, isOpposit }) {
   const wordsR = useSelector((state) => {
     return state.wordset.words;
   });
+
+  // 리덕스 툴킷 사용 (단어 숨김 토글, 이전 이름 isHiding)
+  const isHiding = useSelector((state)=>{
+    return state.bottomOption.hiding
+  })
+
+  // 리덕스 툴킷 사용 (좌우 변경 토글, 이전 이름 isOpposit)
+  const isOpposit = useSelector((state)=>{
+    return state.bottomOption.opposit
+  })
+
  /** 리덕스 상태관리로 이 부분을 처리함
   // 현재 선택된 리스트 wordsetSelect의 내용이 변경될 때 setWords의 상태를 변경시켜 줍니다.
   useEffect(() => {

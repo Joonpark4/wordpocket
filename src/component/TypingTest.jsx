@@ -6,7 +6,7 @@ import { warnFuncChange } from './Redux/SliceWarnFunc';
 import { questionIdxUp, questionIdxChange } from './Redux/SliceQuestionIdx';
 import { tapList } from './Redux/SliceTap';
 
-export default function TypingTest({ isMeaning }) {
+export default function TypingTest() {
   // 리덕스 툴킷 리모콘 사용
   const dispatch = useDispatch();
 
@@ -18,6 +18,11 @@ export default function TypingTest({ isMeaning }) {
   // 리덕스 툴킷 사용 (워드 리스트, 이전 이름 words)
   const questionIdx = useSelector((state) => {
     return state.questionIdx.value;
+  });
+  
+  // 리덕스 툴킷 사용 (뜻 테스트 변경 토글, 이전 이름 isMeaning)
+  const isMeaning = useSelector((state) => {
+    return state.bottomOption.meaning;
   });
 
   // 렌더링시 자동으로 포커스 맞추기
