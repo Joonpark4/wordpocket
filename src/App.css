@@ -63,6 +63,9 @@ div {
 .top_option .btn_Wordset {
   width: 20vw;
 }
+.top_option #btn_Explain{
+  width: 40vw;
+}
 
 .list {
   text-align: left;

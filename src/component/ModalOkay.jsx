@@ -54,6 +54,12 @@ export default function ModalOkay() {
     fontSize: '1.5em',
     marginBottom: '20px',
   };
+  const text2 = {
+    width: '100%',
+    textAlign: 'center',
+    fontSize: '0.9em',
+    marginBottom: '15px',
+  };
   const btn_box = {
     display: 'flex',
     width: '100%',
@@ -88,6 +94,19 @@ export default function ModalOkay() {
       break;
     case 'WORDSET_NO_WORDS':
       warnText = 'No words in this wordset! Please choose another wordset';
+      break;
+    case 'WORDSET_EXPLAIN':
+      warnText = (
+        <div style={text2}>
+          1. Select the wordset that you want to test your memory on the left.
+          <br /><br />
+          2. Read the question word and write the answer in the blank.
+          <br /><br />
+          3. Push 'Answer Submit' button. You'll know it's correct or not.
+          <br /><br />
+          4. Tip: Capital letter or word spacing don't metter.
+        </div>
+      );
       break;
     default:
       break;

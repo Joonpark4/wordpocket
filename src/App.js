@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import { useRef, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import List from './component/List';
 import ModalOkay from './component/ModalOkay';
