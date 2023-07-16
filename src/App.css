@@ -30,6 +30,7 @@ div {
 
 .top_option {
   height: 5%;
+  min-height: 35px;
   background-color: lightgrey;
   overflow: hidden;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* 투명 */
@@ -177,7 +178,6 @@ div {
 }
 
 .bottom_option {
-  height: 8%;
   border: none;
 }
 
@@ -197,6 +197,7 @@ div {
 }
 
 .btn {
+  padding: 1vh 10px;
   flex: 1;
   display: flex;
   justify-content: center;
@@ -221,7 +222,7 @@ div {
   justify-content: center;
   align-items: center;
   background-color: lightcyan;
-  padding: 0px 10px;
+  padding: 1vh 10px;
   cursor: pointer;
   border: 3px solid black;
   border-right: none;
