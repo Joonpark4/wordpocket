@@ -12,7 +12,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import TypingTest from './component/TypingTest';
 import TopOption from './component/TopOption';
 import TapOption from './component/TapOption';
-import BottomOption from './component/BottomOption'
+import BottomOption from './component/BottomOption';
+import SignUp from './component/SignUp';
 
 function App() {
   // 리덕스 툴킷 사용 (리모콘)
@@ -27,7 +28,7 @@ function App() {
   const tap = useSelector((state) => {
     return state.tap.value;
   });
-    
+
   // 이름을 지을건지 수정할건지 체크
   const [isAddWordset, setIsAddWordset] = useState(true);
 
@@ -47,15 +48,14 @@ function App() {
     localStorage.setItem('Wordset', JSON.stringify(wordsetLists));
   }, [wordsetLists]);
 
-  
   // 탭에 따른 섹션 내용 변경
   let section;
   if (tap === 'List') {
     section = <List />;
   } else if (tap === 'Test') {
-    section = <TypingTest/>;
+    section = <TypingTest />;
   } else if (tap === 'Online') {
-    section = <div className="warning">Online 탭은 준비중입니다.</div>;
+    section = <SignUp />;
   }
 
   return (
@@ -70,7 +70,7 @@ function App() {
       <div className="section">{section}</div>
 
       {/* 하단옵션바 */}
-      <BottomOption/>
+      <BottomOption />
 
       {/* 탭 옵션바 */}
       <TapOption />
