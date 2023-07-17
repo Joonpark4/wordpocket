@@ -1,7 +1,7 @@
 /*eslint-disable*/
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { tapList, tapTest, tapSignIn, tapSignUp } from './Redux/SliceTap';
+import { tapList, tapTest, tapSignIn, tapSignUp, tapMyPage } from './Redux/SliceTap';
 
 export default function TapOption() {
   // 리덕스 툴킷 사용 (리모콘)
@@ -33,7 +33,7 @@ export default function TapOption() {
       <div
         className="btn"
         onClick={() => {
-          dispatch(tapSignIn())
+          dispatch(tapMyPage())
         }}
       >
         Online

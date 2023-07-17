@@ -9,6 +9,7 @@ import { warnFuncChange } from './Redux/SliceWarnFunc';
 import { modalWarnToggle } from './Redux/SliceModal';
 import { wordsetSelectChange } from './Redux/SliceWordset';
 import { isAddWordsetToggle } from './Redux/SliceAddModWordsetToggle';
+import { tapSignIn } from './Redux/SliceTap';
 
 export default function TopOption() {
   // 리덕스 툴킷 사용 (리모콘)
@@ -132,8 +133,39 @@ export default function TopOption() {
         </form>
       </div>
     );
-  } else {
-    top_option = <div className="top_option"></div>;
+  } else if (tap === 'SignIn') {
+    top_option = (
+      <div className="top_option divcenter">
+        <div className="signInWarning">
+          warning : You can't see your off-line wordset when you sign-in
+        </div>
+      </div>
+    );
+  } else if (tap === 'SignUp') {
+    top_option = (
+      <div className="top_option divcenter">
+        <div className="signInWarning">
+          warning : You can't see your off-line wordset when you sign-in
+        </div>
+      </div>
+    );
+  } else if (tap === 'MyPage') {
+    top_option = (
+      <div className="top_option signedIn">
+        <div className="txtSignedIn">Welcome XXX !!</div>
+        <div className="divSignOut">
+          <button
+            className="btSignOut"
+            onClick={(e) => {
+              e.preventDefault();
+              dispatch(tapSignIn());
+            }}
+          >
+            Sign Out
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return top_option;

@@ -4,7 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { warnFuncChange } from './Redux/SliceWarnFunc';
 import { modalWarnToggle } from './Redux/SliceModal';
 import { modalWordAddToggle } from './Redux/SliceModal';
-import { isHidingToggle, isMeaningToggle, isOppositToggle, isWordToggle } from './Redux/SliceBottomOption';
+import {
+  isHidingToggle,
+  isMeaningToggle,
+  isOppositToggle,
+  isWordToggle,
+} from './Redux/SliceBottomOption';
 
 export default function BottomOption() {
   // 리덕스 툴킷 사용 (리모콘)
@@ -19,7 +24,6 @@ export default function BottomOption() {
   const isHiding = useSelector((state) => {
     return state.bottomOption.hiding;
   });
-
 
   // 리덕스 툴킷 사용 (좌우 변경 토글, 이전 이름 isOpposit)
   const isOpposit = useSelector((state) => {
@@ -121,7 +125,7 @@ export default function BottomOption() {
         </div>
       </div>
     );
-  } else {
+  } else if (tap === 'MyPage') {
     bottom_option = (
       <div>
         <div className="btn_option list_option">
@@ -138,6 +142,8 @@ export default function BottomOption() {
         <div className="btn_option list_option">Write</div>
       </div>
     );
+  } else {
+    bottom_option = null;
   }
 
   return <div className={'bottom_option'}>{bottom_option}</div>;

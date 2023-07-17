@@ -1,13 +1,11 @@
 import React from 'react';
 
-const NotFound = () => {
+export default function MyPage() {
     return (
         <div className="section">
             <div className='notFoundSection'>
-                <h1>404 Not Found</h1>
+                <h1>You signed in!</h1>
             </div>
         </div>
     );
 };
-  
-export default NotFound;

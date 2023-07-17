@@ -16,7 +16,10 @@ const tapSlice = createSlice({
     tapSignIn: (state, action) => {
       state.value = "SignIn";
     },
+    tapMyPage: (state, action) => {
+      state.value = "MyPage";
+    },
   },
 });
 export default tapSlice;
-export const { tapList, tapTest, tapSignIn, tapSignUp } = tapSlice.actions;
+export const { tapList, tapTest, tapSignIn, tapSignUp, tapMyPage } = tapSlice.actions;
