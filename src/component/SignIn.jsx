@@ -89,7 +89,7 @@ export default function TypingTest() {
           </div>
           <div className="onlineDown">
             <img
-              src={`${process.env.PUBLIC_URL}/signInWithGoogle.jpg`}
+              src={`${process.env.PUBLIC_URL}/SignInWithGoogle.jpg`}
               alt="SignInWithGoogle"
               className="imgSignInWithGoogle"
               onClick={(e) => {
