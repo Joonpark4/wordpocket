@@ -10,10 +10,13 @@ const tapSlice = createSlice({
     tapTest: (state, action) => {
       state.value = "Test";
     },
-    tapOnline: (state, action) => {
-      state.value = "Online";
+    tapSignUp: (state, action) => {
+      state.value = "SignUp";
+    },
+    tapSignIn: (state, action) => {
+      state.value = "SignIn";
     },
   },
 });
 export default tapSlice;
-export const { tapList, tapTest, tapOnline } = tapSlice.actions;
+export const { tapList, tapTest, tapSignIn, tapSignUp } = tapSlice.actions;

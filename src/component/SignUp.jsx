@@ -1,10 +1,10 @@
 /*eslint-disable*/
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { modalWarnToggle } from './Redux/SliceModal';
 import { warnFuncChange } from './Redux/SliceWarnFunc';
+import { tapSignIn } from './Redux/SliceTap';
 import './css/SignUpIn.css';
-import { useNavigate } from 'react-router-dom';
 
 export default function TypingTest() {
   // 리덕스 툴킷 리모콘 사용
@@ -39,13 +39,6 @@ export default function TypingTest() {
     'underId',
     isPassword2Valid ? 'regex' : 'regexOn',
   ].join(' ');
-  
-  // 라우팅을 링크 없이 사용하고 싶으시면 이걸 쓰십쇼
-  const navigate = useNavigate();
-
-  const cancleClick = () => {
-    navigate('/wordpocket/signin');
-  };
 
   return (
     <div className="section">
@@ -95,7 +88,7 @@ export default function TypingTest() {
                 className="btOnline"
                 onClick={(e) => {
                   e.preventDefault();
-                  cancleClick();
+                  dispatch(tapSignIn());
                 }}
               >
                 Cancle

@@ -36,13 +36,15 @@ function App() {
 
   // 탭에 따른 섹션 내용 변경
   let section;
-  // if (tap === 'List') {
-  //   section = <List />;
-  // } else if (tap === 'Test') {
-  //   section = <TypingTest />;
-  // } else if (tap === 'Online') {
-  //   section = <SignUp />;
-  // }
+  if (tap === 'List') {
+    section = <List />;
+  } else if (tap === 'Test') {
+    section = <TypingTest />;
+  } else if (tap === 'SignIn') {
+    section = <SignIn />;
+  } else if (tap === 'SignUp') {
+    section = <SignUp />;
+  }
 
   return (
     <div className="App">
@@ -50,24 +52,16 @@ function App() {
       <div className="black-nav">Word Pocket</div>
 
       {/* 상단 옵션바 */}
-      <BrowserRouter>
         <TopOption />
 
         {/* 라우팅 섹션 */}
-        <Routes>
-          <Route path="/wordpocket/" element={<List />}></Route>
-          <Route path="/wordpocket/test" element={<TypingTest />}></Route>
-          <Route path="/wordpocket/signup" element={<SignUp />}></Route>
-          <Route path="/wordpocket/signin" element={<SignIn />}></Route>
-          <Route path="*" element={<NotFound />}></Route>
-        </Routes>
+        {section}
 
         {/* 하단 옵션바 */}
         <BottomOption />
 
         {/* 탭 옵션바 */}
         <TapOption />
-      </BrowserRouter>
 
       {/* 모달들 */}
       <ModalOkay />

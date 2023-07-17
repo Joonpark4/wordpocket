@@ -48,6 +48,9 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -moz-appearance: none;
+    -webkit-appearance: none;
   }
   .btOnline{
     margin-top: 3%;
