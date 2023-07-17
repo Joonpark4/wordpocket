@@ -1,16 +1,9 @@
 /*eslint-disable*/
 import React from 'react';
+import List from '../component/List';
 import { useDispatch, useSelector } from 'react-redux';
-import { wordsetIdxChange } from './Redux/SliceWordsetIdx';
-import { modalWordsetAMToggle } from './Redux/SliceModal';
-import { modalWordsetDelToggle } from './Redux/SliceModal';
-import { questionIdxChange } from './Redux/SliceQuestionIdx';
-import { warnFuncChange } from './Redux/SliceWarnFunc';
-import { modalWarnToggle } from './Redux/SliceModal';
-import { wordsetSelectChange } from './Redux/SliceWordset';
-import { isAddWordsetToggle } from './Redux/SliceAddModWordsetToggle';
 
-export default function TopOption() {
+const ListPage = () => {
   // 리덕스 툴킷 사용 (리모콘)
   const dispatch = useDispatch();
 
@@ -22,17 +15,45 @@ export default function TopOption() {
   // 리덕스 툴킷 사용 (워드셋 리스트, 이전 이름 options)
   const wordsetLists = useSelector((state) => {
     return state.wordsetList.value;
+  }); // 리덕스 툴킷 사용 (단어 숨김 토글, 이전 이름 isHiding)
+  const isHiding = useSelector((state) => {
+    return state.bottomOption.hiding;
   });
 
-  // 리덕스 툴킷 사용 (워드셋 리스트, 이전 이름 options)
-  const tap = useSelector((state) => {
-    return state.tap.value;
+  // 리덕스 툴킷 사용 (좌우 변경 토글, 이전 이름 isOpposit)
+  const isOpposit = useSelector((state) => {
+    return state.bottomOption.opposit;
   });
 
-  // 탭에 따른 상단 옵션바 내용 변경
-  let top_option;
-  if (tap === 'List') {
-    top_option = (
+  // 리덕스 툴킷 사용 (뜻 테스트 변경 토글, 이전 이름 isMeaning)
+  const isMeaning = useSelector((state) => {
+    return state.bottomOption.meaning;
+  });
+
+  // 리덕스 툴킷 사용 (단어 테스트 변경 토글, 이전 이름 isWord)
+  const isWord = useSelector((state) => {
+    return state.bottomOption.word;
+  });
+
+  // 아래는 버튼을 이쁘게 만들어줘요
+  let hidingClass = ['btn_option list_option', isHiding ? 'btn_pushed' : null]
+    .filter(Boolean)
+    .join(' ');
+  let oppositClass = ['btn_option list_option', isOpposit ? 'btn_pushed' : null]
+    .filter(Boolean)
+    .join(' ');
+  let testMeaningClass = [
+    'btn_option list_option',
+    isMeaning ? 'btn_pushed' : null,
+  ]
+    .filter(Boolean)
+    .join(' ');
+  let testWordClass = ['btn_option list_option', isWord ? 'btn_pushed' : null]
+    .filter(Boolean)
+    .join(' ');
+
+  return (
+    <>
       <div className="top_option">
         <form>
           <select
@@ -96,45 +117,48 @@ export default function TopOption() {
           </button>
         </form>
       </div>
-    );
-  } else if (tap === 'Test') {
-    top_option = (
-      <div className="top_option">
-        <form>
-          <select
-            className="dropdown"
-            name="listname"
-            id="listname"
-            onChange={(e) => {
-              dispatch(questionIdxChange());
-              dispatch(wordsetSelectChange(e.target.value));
-              dispatch(wordsetIdxChange(wordsetLists.indexOf(e.target.value)));
-            }}
-            value={wordsetSelect}
+      <List />
+      <div className={'bottom_option'}>
+        <div>
+          <div
+            className={hidingClass}
+            onClick={() => dispatch(isHidingToggle(!isHiding))}
           >
-            {wordsetLists.map((option, i) => (
-              <option key={i} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-          <button
-            className="btn_Wordset"
-            id="btn_Explain"
-            onClick={(e) => {
-              e.preventDefault();
-              dispatch(warnFuncChange('WORDSET_EXPLAIN'));
+            Hide
+            <br />
+            Meaning
+          </div>
+          <div
+            className={oppositClass}
+            onClick={() => {
+              dispatch(isOppositToggle(!isOpposit));
+            }}
+          >
+            Opposite
+          </div>
+          <div
+            className="btn_option list_option"
+            onClick={() => dispatch(modalWordAddToggle(true))}
+          >
+            Add
+            <br />
+            Words
+          </div>
+          <div
+            className="btn_option list_option"
+            onClick={() => {
+              dispatch(warnFuncChange('NOT_WORKING'));
               dispatch(modalWarnToggle(true));
             }}
           >
-            How to use this?
-          </button>
-        </form>
+            Update
+            <br />
+            List
+          </div>
+        </div>
       </div>
-    );
-  } else {
-    top_option = <div className="top_option"></div>;
-  }
+    </>
+  );
+};
 
-  return top_option;
-}
+export default ListPage;

@@ -21,16 +21,16 @@ function List() {
   });
 
   // 리덕스 툴킷 사용 (단어 숨김 토글, 이전 이름 isHiding)
-  const isHiding = useSelector((state)=>{
-    return state.bottomOption.hiding
-  })
+  const isHiding = useSelector((state) => {
+    return state.bottomOption.hiding;
+  });
 
   // 리덕스 툴킷 사용 (좌우 변경 토글, 이전 이름 isOpposit)
-  const isOpposit = useSelector((state)=>{
-    return state.bottomOption.opposit
-  })
+  const isOpposit = useSelector((state) => {
+    return state.bottomOption.opposit;
+  });
 
- /** 리덕스 상태관리로 이 부분을 처리함
+  /** 리덕스 상태관리로 이 부분을 처리함
   // 현재 선택된 리스트 wordsetSelect의 내용이 변경될 때 setWords의 상태를 변경시켜 줍니다.
   useEffect(() => {
     // 기본적으로 wordsetSelect 변수의 이름과 같은(현재 선택된) 배열을 storedWords 변수에 넣습니다.
@@ -87,7 +87,6 @@ function List() {
     });
     // id 값을 상위컴포넌트, 최종적으로는 ModalUpdate와 ModalDelete에 전달하기 위함
     dispatch(updateIdChange(id));
-
   };
 
   // 선택된 항목 바깥 클릭 시 선택 해제
@@ -119,7 +118,7 @@ function List() {
     .join(' ');
 
   return (
-    <>
+    <div className="section">
       {wordsR.map((word, i) => {
         const isSelected = selected[word.id];
         const classes = ['list', isSelected ? 'selected' : null]
@@ -127,11 +126,7 @@ function List() {
           .join(' '); // 공백을 포함시켜주어야 클래스명이 올바르게 동작 그렇지 않으면 클래스 사이에 쉼표처리됨
 
         return (
-          <div
-            className={classes}
-            onClick={() => handleClick(word.id)}
-            key={i}
-          >
+          <div className={classes} onClick={() => handleClick(word.id)} key={i}>
             {!isOpposit && (
               <div className="list_top">
                 <div className="list_left">{word.left}</div>
@@ -168,7 +163,7 @@ function List() {
           </div>
         );
       })}
-    </>
+    </div>
   );
 }
 

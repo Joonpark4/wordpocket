@@ -19,7 +19,7 @@ export default function TypingTest() {
   const questionIdx = useSelector((state) => {
     return state.questionIdx.value;
   });
-  
+
   // 리덕스 툴킷 사용 (뜻 테스트 변경 토글, 이전 이름 isMeaning)
   const isMeaning = useSelector((state) => {
     return state.bottomOption.meaning;
@@ -51,7 +51,7 @@ export default function TypingTest() {
       setCorrectImage(false);
     }, 900); // 이미지 표시 후 0.9초(900 밀리초) 후에 이미지를 사라지게 합니다. 1초로 하니 css와 미묘하게 타이밍이 어긋남
   };
-  
+
   // 오답이미지 보여주기
   const [inCorrectImage, setInCorrectImage] = useState(false);
 
@@ -79,16 +79,12 @@ export default function TypingTest() {
     } else {
       newWordsR = wordsR[questionIdx].left.replace(/(\s*)/g, '').toLowerCase();
     }
-    console.log(newTbAnswer);
-    console.log(newWordsR);
     if (newTbAnswer === newWordsR) {
       // alert('정답입니다.');
       showCorrectImg();
       setTbAnswer('');
       focusOn();
       if (questionIdx < wordsR.length - 1) {
-        console.log('qestionIdx : ' + questionIdx);
-        console.log('wordsR.length : ' + (wordsR.length - 1));
         dispatch(questionIdxUp());
       } else {
         dispatch(questionIdxChange());
@@ -108,58 +104,60 @@ export default function TypingTest() {
   }
 
   return (
-    <div className="pageTypingTest">
-      <div className="TypingTestUp">
-        <span className="TypingTestText">Qestion : </span>
-        <input
-          type="text"
-          className="TypingTestQuestion"
-          // 아래는 isMeaning 값이 true 혹은 false 임에 따라 단어를 보고 뜻을 입력할지, 단어의 뜻을 보고 단어를 입력할지 정할 수 있다.
-          // 또한 에러를 방지하기 위해 만약 현재 선택된 워드셋에 단어가 0보다 큰 경우에만 값을 가져오고, 아니면 공백으로 비워둔다.
-          // 공백으로 비우는건 단순 에러를 피하기 위함, 즉시 워드셋에 단어가 없어도 상관없는 List단계로 넘어가기 때문에 치명적 오류를 피할 수 있다.
-          value={
-            wordsR.length > 0 && questionIdx < wordsR.length
-              ? isMeaning
-                ? wordsR[questionIdx].left
-                : wordsR[questionIdx].right
-              : ''
-          }
-          disabled={true}
-        />
-      </div>
-      <div className="TypingTestDown">
-        {/* 아래는 정답 이미지 */}
-        {correctImage && (
-          <img
-            src={`${process.env.PUBLIC_URL}/checked.png`}
-            alt="Checked"
-            className="checked-image"
-          />
-        )}
-        {/* 아래는 오답 이미지 */}
-        {inCorrectImage && (
-          <img
-            src={`${process.env.PUBLIC_URL}/cancel.png`}
-            alt="Cancel"
-            className="cancel-image"
-          />
-        )}
-        <span className="TypingTestText">Answer : </span>
-        <form onSubmit={handleSubmit}>
+    <div className="section">
+      <div className="pageTypingTest">
+        <div className="TypingTestUp">
+          <span className="TypingTestText">Qestion : </span>
           <input
             type="text"
-            className="TypingTestAnswer"
-            placeholder="Your answer here"
-            ref={tb_Answer}
-            value={tbAnswer}
-            onChange={(e) => {
-              setTbAnswer(e.target.value);
-            }}
+            className="TypingTestQuestion"
+            // 아래는 isMeaning 값이 true 혹은 false 임에 따라 단어를 보고 뜻을 입력할지, 단어의 뜻을 보고 단어를 입력할지 정할 수 있다.
+            // 또한 에러를 방지하기 위해 만약 현재 선택된 워드셋에 단어가 0보다 큰 경우에만 값을 가져오고, 아니면 공백으로 비워둔다.
+            // 공백으로 비우는건 단순 에러를 피하기 위함, 즉시 워드셋에 단어가 없어도 상관없는 List단계로 넘어가기 때문에 치명적 오류를 피할 수 있다.
+            value={
+              wordsR.length > 0 && questionIdx < wordsR.length
+                ? isMeaning
+                  ? wordsR[questionIdx].left
+                  : wordsR[questionIdx].right
+                : ''
+            }
+            disabled={true}
           />
-          <button type="submit" className="TypingTestSubmit">
-            Answer submit!
-          </button>
-        </form>
+        </div>
+        <div className="TypingTestDown">
+          {/* 아래는 정답 이미지 */}
+          {correctImage && (
+            <img
+              src={`${process.env.PUBLIC_URL}/checked.png`}
+              alt="Checked"
+              className="checked-image"
+            />
+          )}
+          {/* 아래는 오답 이미지 */}
+          {inCorrectImage && (
+            <img
+              src={`${process.env.PUBLIC_URL}/cancel.png`}
+              alt="Cancel"
+              className="cancel-image"
+            />
+          )}
+          <span className="TypingTestText">Answer : </span>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              className="TypingTestAnswer"
+              placeholder="Your answer here"
+              ref={tb_Answer}
+              value={tbAnswer}
+              onChange={(e) => {
+                setTbAnswer(e.target.value);
+              }}
+            />
+            <button type="submit" className="TypingTestSubmit">
+              Answer submit!
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

@@ -35,6 +35,7 @@ export default function ModalOkay() {
       position: 'relative',
       inset: '0',
       width: '80%',
+      maxWidth: 500,
       top: '30%',
       left: '10%',
       display: 'flex',
@@ -99,11 +100,14 @@ export default function ModalOkay() {
       warnText = (
         <div style={text2}>
           1. Select the wordset that you want to test your memory on the left.
-          <br /><br />
+          <br />
+          <br />
           2. Read the question word and write the answer in the blank.
-          <br /><br />
+          <br />
+          <br />
           3. Push 'Answer Submit' button. You'll know it's correct or not.
-          <br /><br />
+          <br />
+          <br />
           4. Tip: Capital letter or word spacing don't metter.
         </div>
       );

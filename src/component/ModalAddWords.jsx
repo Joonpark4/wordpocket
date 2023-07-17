@@ -43,6 +43,7 @@ export default function ModalAddWords() {
       position:'relative',
       inset:'0',
       width:'80%',
+      maxWidth: 500,
       top:'30%',
       left:'10%',
       display: 'flex',

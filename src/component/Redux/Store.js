@@ -8,6 +8,7 @@ import questionIdxSlice from './SliceQuestionIdx';
 import tapSlice from './SliceTap';
 import modalSlice from './SliceModal';
 import bottomOptionSlice from './SliceBottomOption';
+import SliceAddModWordset from './SliceAddModWordsetToggle';
 
 const store = configureStore({
   reducer: {
@@ -19,7 +20,8 @@ const store = configureStore({
   questionIdx : questionIdxSlice.reducer,
   tap : tapSlice.reducer,
   modal : modalSlice.reducer,
-  bottomOption : bottomOptionSlice.reducer
+  bottomOption : bottomOptionSlice.reducer,
+  addModWordset : SliceAddModWordset.reducer,
 },
 });
 export default store;

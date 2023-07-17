@@ -9,7 +9,7 @@ import { warnFuncChange } from './Redux/SliceWarnFunc';
 import { wordsetIdxChange } from './Redux/SliceWordsetIdx';
 import { modalWordsetAMToggle } from './Redux/SliceModal';
 
-export default function ModalWordsetAddMod({ isAddWordset }) {
+export default function ModalWordsetAddMod() {
   // 리덕스 툴킷 사용 (리모콘)
   const dispatch = useDispatch();
 
@@ -38,6 +38,11 @@ export default function ModalWordsetAddMod({ isAddWordset }) {
     return state.modal.wordsetam;
   });
 
+  // 리덕스 툴킷 사용 (워드셋 추가인지 수정인지 토글, 이전 이름 isAddWordset)
+  const isAddWordset = useSelector((state) => {
+    return state.addModWordset.value;
+  });
+
   const style = {
     overlay: {
       position: 'fixed',
@@ -55,6 +60,7 @@ export default function ModalWordsetAddMod({ isAddWordset }) {
       position: 'relative',
       inset: '0',
       width: '80%',
+      maxWidth: 500,
       top: '30%',
       left: '10%',
       display: 'flex',
