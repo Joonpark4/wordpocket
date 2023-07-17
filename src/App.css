@@ -279,6 +279,14 @@ div {
   font-weight: bold;
 }
 
+.notFoundSection{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* 모달창을 화면 중앙. 최상단에 노출 */
 .container {
   /* 모달창 크기 */

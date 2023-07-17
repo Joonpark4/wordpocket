@@ -16,7 +16,7 @@ import TapOption from './component/TapOption';
 import SignUp from './component/SignUp';
 import SignIn from './component/SignIn';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import NotFound from './Router/NotFound';
+import NotFound from './component/NotFound';
 
 function App() {
   // 리덕스 툴킷 사용 (워드셋 리스트, 이전 이름 options)
