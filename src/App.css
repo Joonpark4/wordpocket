@@ -35,7 +35,8 @@ div {
   min-height: 35px;
   background-color: lightgrey;
   overflow: hidden;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* 투명 */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  /* 투명 */
   -moz-appearance: none;
   -webkit-appearance: none;
 }
@@ -70,8 +71,30 @@ div {
   font-size: 10px;
   box-shadow: inset -0.1rem -0.1rem 0.1rem gray;
 }
-.top_option #btn_Explain{
+
+.top_option #btn_Explain {
   flex-basis: 35%;
+}
+
+.txtSignedIn {
+  text-align: right;
+}
+
+.divSignOut {
+  flex-basis: 25%;
+  text-align: left;
+  margin-left: 2%;
+}
+
+.btSignOut {
+  padding: 5px 20px;
+  font-weight: bolder;
+  background-color: lightcyan;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 13px;
+  box-shadow: inset -0.1rem -0.1rem 0.1rem gray;
 }
 
 .list {
@@ -82,7 +105,8 @@ div {
   padding: 10px 30px 10px 20px;
   font-size: calc(15px + 1vh);
   cursor: pointer;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* 투명 */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  /* 투명 */
   -moz-appearance: none;
   -webkit-appearance: none;
 }
@@ -125,7 +149,8 @@ div {
   border-right: none;
   cursor: pointer;
   padding: 1vh;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* 투명 */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  /* 투명 */
   -moz-appearance: none;
   -webkit-appearance: none;
 }
@@ -149,20 +174,24 @@ div {
   overflow-y: scroll;
 }
 
-.pageTypingTest{
+.pageTypingTest {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.TypingTestUp, .TypingTestDown{
+
+.TypingTestUp,
+.TypingTestDown {
   max-width: 500px;
-  position:relative;
+  position: relative;
   margin: 20px;
   text-align: center;
 }
-.TypingTestQuestion, .TypingTestAnswer{
+
+.TypingTestQuestion,
+.TypingTestAnswer {
   margin-top: 2%;
   width: 97%;
   height: calc(35px + 1vw);
@@ -173,12 +202,14 @@ div {
   padding: 1%;
   font-weight: bolder;
 }
-.TypingTestQuestion{
+
+.TypingTestQuestion {
   border: none;
   background-color: white;
   color: navy;
 }
-.TypingTestSubmit{
+
+.TypingTestSubmit {
   margin-top: 3%;
   height: calc(35px + 1vw);
   width: 99%;
@@ -191,7 +222,8 @@ div {
   font-size: 13px;
   box-shadow: inset -0.2rem -0.2rem 0.1rem gray;
 }
-.TypingTestText{
+
+.TypingTestText {
   font-size: larger;
   font-weight: bolder;
 }
@@ -230,7 +262,8 @@ div {
   border: 3px solid gray;
   border-right: none;
   cursor: pointer;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* 투명 */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  /* 투명 */
   -moz-appearance: none;
   -webkit-appearance: none;
 }
@@ -253,14 +286,16 @@ div {
   font-size: 13px;
   transition: 200ms;
   box-shadow: inset -.2rem -0.2rem .1rem gray;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* 투명 */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  /* 투명 */
   -moz-appearance: none;
   -webkit-appearance: none;
 }
 
 .btn_pushed {
   box-shadow: inset .2rem .2rem .2rem gray, inset -.2rem -.2rem .4rem #BEC5D0;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* 투명 */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  /* 투명 */
   -moz-appearance: none;
   -webkit-appearance: none;
 }
@@ -276,23 +311,7 @@ div {
   border: none;
 }
 
-.txtSignedIn{
-  flex-basis: 70%;
-}
-.divSignOut{
-  flex-basis: 30%;
-  text-align: left;
-}
-.btSignOut{
-  padding: 5px 20px;
-  font-weight: bolder;
-  background-color: lightcyan;
-  cursor: pointer;
-  border-radius: 5px;
-  text-align: center;
-  font-size: 13px;
-  box-shadow: inset -0.1rem -0.1rem 0.1rem gray;
-}
+
 
 
 /* 미완성 경고 */
@@ -306,7 +325,7 @@ div {
   font-weight: bold;
 }
 
-.notFoundSection{
+.notFoundSection {
   width: 100%;
   height: 100%;
   display: flex;
@@ -347,24 +366,26 @@ div {
   transform: translate(-50%, 0%);
 }
 
-.checked-image, .cancel-image {
+.checked-image,
+.cancel-image {
   animation: fadeInOut 1s ease-in-out;
   position: absolute;
-  transform: translate(-15%,0%);
+  transform: translate(-15%, 0%);
 }
 
-.divcenter{
+.divcenter {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.signInWarning{
+.signInWarning {
   font-size: calc(1.4vh);
-  color:mediumvioletred;
+  color: mediumvioletred;
   font-weight: bold;
 }
-.signedIn{
+
+.signedIn {
   width: 100%;
   display: flex;
   align-items: center;
@@ -374,13 +395,16 @@ div {
   -webkit-appearance: none;
   text-align: center;
 }
+
 @keyframes fadeInOut {
   0% {
     opacity: 0;
   }
+
   50% {
     opacity: 0.6;
   }
+
   100% {
     opacity: 0;
   }

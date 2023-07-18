@@ -11,6 +11,11 @@
     flex-direction: column;
     align-items: center;
   }
+  .signUpEmailCheck{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
   .onlineUp, .onlineDown{
     width: 90vw;
     margin-top: 15px;
@@ -68,6 +73,12 @@
   .btOnlineSubmit{
     background-color: lightcyan;
   }
+  .btEmailCheck{
+    width: 40%;
+    margin-top: 2%;
+    margin-left: 2%;
+    background-color: lightcyan;
+  }
   .onlineMiddle{
     width: 85%;
     max-width: 490px;
@@ -84,4 +95,9 @@
   .onlineDown img{
     width: 100%;
     max-width: 400px;
+  }
+  .divcenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }

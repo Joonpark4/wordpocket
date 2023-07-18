@@ -3,6 +3,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { modalWarnToggle } from './Redux/SliceModal';
+import { tapMyPage } from './Redux/SliceTap';
 
 export default function ModalOkay() {
   // 리덕스 툴킷 리모콘 사용
@@ -112,6 +113,28 @@ export default function ModalOkay() {
         </div>
       );
       break;
+    case 'SIGNUP_SUCCESED':
+      warnText = (
+        <div style={text2}>
+          Signed up succesfuly!
+          <br />
+          Welcome to Word Pocket service.
+        </div>
+      );
+      break;
+    case 'REQUIREMENTS_FAILED':
+      warnText =
+        'Please fill in all the blanks according to the requirements first.';
+      break;
+    case 'EMAIL_ALREADY':
+      warnText = 'That email is already in use.';
+      break;
+    case 'EMAICHECK_SUCCESED':
+      warnText = 'We sent you an emial successfully!';
+      break;
+    case 'SIGNIN_FAILED':
+      warnText = 'Please check your Email or password';
+      break;
     default:
       break;
   }
@@ -126,7 +149,12 @@ export default function ModalOkay() {
       <div style={btn_box}>
         <button
           style={btn_style}
-          onClick={() => dispatch(modalWarnToggle(false))}
+          onClick={() => {
+            if (warnFunc == 'SIGNUP_SUCCESED') {
+              dispatch(tapMyPage());
+            }
+            dispatch(modalWarnToggle(false));
+          }}
         >
           Got it!
         </button>

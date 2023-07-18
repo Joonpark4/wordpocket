@@ -3,8 +3,15 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { modalWarnToggle } from './Redux/SliceModal';
 import { warnFuncChange } from './Redux/SliceWarnFunc';
-import { tapSignUp } from './Redux/SliceTap';
+import { tapMyPage, tapSignUp } from './Redux/SliceTap';
 import './css/SignUpIn.css';
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from 'firebase/auth';
+import app from '../firebase';
 
 export default function TypingTest() {
   // 리덕스 툴킷 리모콘 사용
@@ -19,17 +26,76 @@ export default function TypingTest() {
       ? true
       : /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(txtEmail);
 
-  // 이메일 형식 경고 문자 클래스
-  const emailchecktext = ['underId', isEmailValid ? 'regex' : 'regexOn'].join(
-    ' '
-  );
-
   // 비밀번호1, 6글자 이상인지 확인
   const isPasswordValid = txtPassword.length >= 6;
   const passwordchecktext = [
     'underId',
     txtPassword.length == 0 || isPasswordValid ? 'regex' : 'regexOn',
   ].join(' ');
+
+  // 파이어베이스 설정
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  // 로그인 버튼 누르면
+  const clickSignIn = async () => {
+    if (isEmailValid && isPasswordValid) {
+      signInWithEmailAndPassword(auth, txtEmail, txtPassword)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          // ...
+          dispatch(tapMyPage());
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode);
+          console.log(errorMessage);
+          if (errorCode == 'auth/wrong-password'||errorCode == 'auth/user-not-found') {
+            setTxtPassword('');
+            dispatch(warnFuncChange('SIGNIN_FAILED'));
+            dispatch(modalWarnToggle(true));
+          }
+        });
+    } else {
+      dispatch(warnFuncChange('REQUIREMENTS_FAILED'));
+      dispatch(modalWarnToggle(true));
+    }
+  };
+
+  // 구글가입 클릭시 실행 함수
+  const clickGoogleSignUp = async () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+        console.log(credential);
+        console.log(token);
+        console.log(user);
+        dispatch(tapMyPage());
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+        console.log(error);
+        console.log(errorCode);
+        console.log(errorMessage);
+        console.log(email);
+        console.log(credential);
+      });
+  };
 
   return (
     <div className="section">
@@ -61,7 +127,7 @@ export default function TypingTest() {
                 className="btOnline"
                 onClick={(e) => {
                   e.preventDefault();
-                  dispatch(tapSignUp())
+                  dispatch(tapSignUp());
                 }}
               >
                 Sign Up
@@ -71,8 +137,7 @@ export default function TypingTest() {
                 className="btOnline btOnlineSubmit"
                 onClick={(e) => {
                   e.preventDefault();
-                  dispatch(warnFuncChange('NOT_WORKING'));
-                  dispatch(modalWarnToggle(true));
+                  clickSignIn();
                 }}
               >
                 Sign In
@@ -87,8 +152,7 @@ export default function TypingTest() {
               className="imgSignInWithGoogle"
               onClick={(e) => {
                 e.preventDefault();
-                dispatch(warnFuncChange('NOT_WORKING'));
-                dispatch(modalWarnToggle(true));
+                clickGoogleSignUp();
               }}
             />
           </div>

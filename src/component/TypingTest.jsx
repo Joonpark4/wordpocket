@@ -80,7 +80,6 @@ export default function TypingTest() {
       newWordsR = wordsR[questionIdx].left.replace(/(\s*)/g, '').toLowerCase();
     }
     if (newTbAnswer === newWordsR) {
-      // alert('정답입니다.');
       showCorrectImg();
       setTbAnswer('');
       focusOn();
