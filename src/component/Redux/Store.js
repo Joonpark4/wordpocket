@@ -9,6 +9,7 @@ import tapSlice from './SliceTap';
 import modalSlice from './SliceModal';
 import bottomOptionSlice from './SliceBottomOption';
 import SliceAddModWordset from './SliceAddModWordsetToggle';
+// import SliceSignInOut from './SliceSignInOut';
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
   modal : modalSlice.reducer,
   bottomOption : bottomOptionSlice.reducer,
   addModWordset : SliceAddModWordset.reducer,
+  // signInOut : SliceSignInOut.reducer,
 },
 });
 export default store;

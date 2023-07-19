@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth } from 'firebase/auth';
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDn9YbK_E7NxHrrqQoT_wkFjXNpjV4Tws0",
@@ -14,6 +14,8 @@ const firebaseConfig = {
 
 // Firebase 설정 초기화
 const app = initializeApp(firebaseConfig);
+
 const analytics = getAnalytics(app);
+export const db = getFirestore(app);
 
 export default app;

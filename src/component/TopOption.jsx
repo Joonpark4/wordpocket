@@ -167,20 +167,12 @@ export default function TopOption() {
         </form>
       </div>
     );
-  } else if (tap === 'SignIn') {
+  } else if (tap === 'SignIn' || tap === 'SignUp') {
     top_option = (
-      <div className="top_option divcenter">
-        <div className="signInWarning">
+      <div className="top_option signInUpTopOption">
+        {/* <div className="signInWarning">
           warning : You can't see your off-line wordset when you sign-in
-        </div>
-      </div>
-    );
-  } else if (tap === 'SignUp') {
-    top_option = (
-      <div className="top_option divcenter">
-        <div className="signInWarning">
-          warning : You can't see your off-line wordset when you sign-in
-        </div>
+        </div> */}
       </div>
     );
   } else if (tap === 'MyPage') {

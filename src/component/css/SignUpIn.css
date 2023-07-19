@@ -96,8 +96,6 @@
     width: 100%;
     max-width: 400px;
   }
-  .divcenter {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .signInUpTopOption{
+    display: none;
   }

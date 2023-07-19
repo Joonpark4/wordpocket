@@ -2,23 +2,30 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { wordsChange } from './Redux/SliceWordset';
 import { modalWordModToggle } from './Redux/SliceModal';
 import { modalWordDelToggle } from './Redux/SliceModal';
-import { updateIdChange } from './Redux/SliceUpdateId';
+import { db } from '../firebase';
+import { doc, getDoc } from 'firebase/firestore';
 
 function List() {
+  const WordsetData = async () => {
+    const docRef = doc(db, "cities", "SF");
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+    } else {
+      // docSnap.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  };
+
   const dispatch = useDispatch();
 
-  // 리덕스 툴킷 사용 (선택된 워드셋과 변경, 이전 이름 listSelect)
-  const wordsetSelect = useSelector((state) => {
-    return state.wordset.value;
-  });
+  // 워드셋 리스트 데이터 받기
+  const wordsetSelect = null;
 
-  // 리덕스 툴킷 사용 (워드 리스트, 이전 이름 words)
-  const wordsR = useSelector((state) => {
-    return state.wordset.words;
-  });
+  // 워드 리스트 데이터 받기
+  const wordsR = null;
 
   // 리덕스 툴킷 사용 (단어 숨김 토글, 이전 이름 isHiding)
   const isHiding = useSelector((state) => {
@@ -29,22 +36,6 @@ function List() {
   const isOpposit = useSelector((state) => {
     return state.bottomOption.opposit;
   });
-
-  // 만약 로그인이 안되어있다면 로컬스토리지를 사용하기로 한다.
-    // 변수 words 가 변경될때마다 words의 배열값을 로컬스토리지에 저장시킨다.
-    useEffect(() => {
-      localStorage.setItem(wordsetSelect, JSON.stringify(wordsR));
-    }, [wordsR]);
-
-    // 로컬스토리지에 저장된 배열 words가 변경될 때마다 배열을 재탐색하여 index+1이 되는 속성값을 id에 저장한다.
-    useEffect(() => {
-      function resetIds(wordsR) {
-        return wordsR.map((word, index) => ({ ...word, id: index + 1 }));
-      }
-      let storedWords = localStorage.getItem(wordsetSelect);
-      // setWords(resetIds(JSON.parse(storedWords)));
-      dispatch(wordsChange(resetIds(JSON.parse(storedWords))));
-    }, [localStorage.getItem(wordsetSelect)]);
 
   // 선택시 아래로 버튼 내려오는것 상태 저장 스테이트.
   // 초기상태는 빈 객체로 시작합니다. 객체를 사용하는 이유는 아이디를 쉽게 조회하고 변경할 수 있기 때문입니다.
