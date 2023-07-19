@@ -411,23 +411,27 @@ div {
   }
 }
 
-@media screen and (max-height:400px) {
-  .black-nav{
+@media screen and (max-height:450px) {
+  .TypingTestUp,
+  .TypingTestDown {
+    margin: 0;
+  }
+}
+
+@media screen and (max-height:390px) {
+  .black-nav {
     display: none;
   }
-  .bottom_option{
+
+  .bottom_option {
     min-height: auto;
   }
-  .btn_option{
-    font-size: 8px;
-  }
-  .tap_page{
+
+  .tap_page {
     min-height: auto;
   }
-  .btn{
-    font-size: 15px;
-  }
-  .TypingTestUp, .TypingTestDown{
-    margin: 0;
+
+  .btn {
+    font-size: 25px;
   }
 }

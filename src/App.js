@@ -8,7 +8,7 @@ import ModalUpdateWords from './component/ModalUpdateWords';
 import ModalDeleteWords from './component/ModalDeleteWords';
 import ModalWordsetAddMod from './component/ModalWordsetAddMod';
 import ModalWordsetDelete from './component/ModalWordsetDelete';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import TopOption from './component/TopOption';
 import BottomOption from './component/BottomOption';
 import TypingTest from './component/TypingTest';
@@ -18,9 +18,6 @@ import SignIn from './component/SignIn';
 import MyPage from './component/MyPage';
 
 function App() {
-  // 리덕스 툴킷 사용 (리모콘)
-  const dispatch = useDispatch();
-
   // 리덕스 툴킷 사용 (워드셋 리스트, 이전 이름 options)
   const wordsetLists = useSelector((state) => {
     return state.wordsetList.value;

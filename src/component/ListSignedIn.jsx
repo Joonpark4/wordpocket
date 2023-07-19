@@ -7,7 +7,7 @@ import { modalWordDelToggle } from './Redux/SliceModal';
 import { db } from '../firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
-function List() {
+function ListSignedIn() {
   const WordsetData = async () => {
     const docRef = doc(db, "cities", "SF");
     const docSnap = await getDoc(docRef);
@@ -18,6 +18,7 @@ function List() {
       console.log("No such document!");
     }
   };
+
 
   const dispatch = useDispatch();
 
@@ -138,4 +139,4 @@ function List() {
   );
 }
 
-export default List;
+export default ListSignedIn;
