@@ -60,91 +60,97 @@ export default function BottomOption() {
   let bottom_option;
   if (tap === 'List') {
     bottom_option = (
-      <div>
-        <div
-          className={hidingClass}
-          onClick={() => dispatch(isHidingToggle(!isHiding))}
-        >
-          Hide
-          <br />
-          Meaning
-        </div>
-        <div
-          className={oppositClass}
-          onClick={() => {
-            dispatch(isOppositToggle(!isOpposit));
-          }}
-        >
-          Opposite
-        </div>
-        <div
-          className="btn_option list_option"
-          onClick={() => dispatch(modalWordAddToggle(true))}
-        >
-          Add
-          <br />
-          Words
-        </div>
-        <div
-          className="btn_option list_option"
-          onClick={() => {
-            dispatch(warnFuncChange('NOT_WORKING'));
-            dispatch(modalWarnToggle(true));
-          }}
-        >
-          Update
-          <br />
-          List
+      <div className={'bottom_option'}>
+        <div>
+          <div
+            className={hidingClass}
+            onClick={() => dispatch(isHidingToggle(!isHiding))}
+          >
+            Hide
+            <br />
+            Meaning
+          </div>
+          <div
+            className={oppositClass}
+            onClick={() => {
+              dispatch(isOppositToggle(!isOpposit));
+            }}
+          >
+            Opposite
+          </div>
+          <div
+            className="btn_option list_option"
+            onClick={() => dispatch(modalWordAddToggle(true))}
+          >
+            Add
+            <br />
+            Words
+          </div>
+          <div
+            className="btn_option list_option"
+            onClick={() => {
+              dispatch(warnFuncChange('NOT_WORKING'));
+              dispatch(modalWarnToggle(true));
+            }}
+          >
+            Update
+            <br />
+            List
+          </div>
         </div>
       </div>
     );
   } else if (tap === 'Test') {
     bottom_option = (
-      <div>
-        <div
-          className={testMeaningClass}
-          onClick={() => {
-            dispatch(isMeaningToggle(!isMeaning));
-            dispatch(isWordToggle(!isWord));
-          }}
-        >
-          Typing
-          <br />
-          Meaning
-        </div>
-        <div
-          className={testWordClass}
-          onClick={() => {
-            dispatch(isWordToggle(!isWord));
-            dispatch(isMeaningToggle(!isMeaning));
-          }}
-        >
-          Typing
-          <br />
-          Word
+      <div className={'bottom_option'}>
+        <div>
+          <div
+            className={testMeaningClass}
+            onClick={() => {
+              dispatch(isMeaningToggle(!isMeaning));
+              dispatch(isWordToggle(!isWord));
+            }}
+          >
+            Typing
+            <br />
+            Meaning
+          </div>
+          <div
+            className={testWordClass}
+            onClick={() => {
+              dispatch(isWordToggle(!isWord));
+              dispatch(isMeaningToggle(!isMeaning));
+            }}
+          >
+            Typing
+            <br />
+            Word
+          </div>
         </div>
       </div>
     );
   } else if (tap === 'MyPage') {
     bottom_option = (
-      <div>
-        <div className="btn_option list_option">
-          Wordset
-          <br />
-          Download
+      <div className={'bottom_option'}>
+        <div>
+          <div className="btn_option list_option">
+            Wordset
+            <br />
+            Download
+          </div>
+          <div className="btn_option list_option">
+            Wordset
+            <br />
+            Upload
+          </div>
+          <div className="btn_option list_option">Board</div>
+          <div className="btn_option list_option">Write</div>
         </div>
-        <div className="btn_option list_option">
-          Wordset
-          <br />
-          Upload
-        </div>
-        <div className="btn_option list_option">Board</div>
-        <div className="btn_option list_option">Write</div>
       </div>
     );
   } else {
     bottom_option = null;
   }
 
-  return <div className={'bottom_option'}>{bottom_option}</div>;
+  return bottom_option;
 }
