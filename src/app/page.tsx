@@ -1,7 +1,7 @@
 export default function Home() {
   return (
-    <main className="flex flex-col items-center justify-between flex-1">
-      Hello World
+    <main className="flex flex-col items-center justify-center flex-1">
+      is Login?
     </main>
   )
 }
