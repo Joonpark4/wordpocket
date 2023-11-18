@@ -1,4 +1,4 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [
@@ -14,11 +14,18 @@ const config: Config = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       animation: {
-        'fadeIn': 'fadeIn 800ms ease-in-out',
-        'fadeOut': 'fadeOut 800ms ease-in-out',
-      }
+        fadeIn: 'fadeIn 800ms ease-in-out',
+        fadeOut: 'fadeOut 800ms ease-in-out',
+        gradient: 'gradient 500ms linear infinite',
+        gradientReverse: 'gradientReverse 500ms linear infinite',
+        neon: 'neon 2500ms ease-in-out infinite',
+      },
+      backgroundSize: {
+        '200%': '200%',
+        '300%': '300%',
+      },
     },
   },
   plugins: [],
-}
-export default config
+};
+export default config;

@@ -18,3 +18,37 @@
     opacity: 0;
   }
 }
+@keyframes gradient {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 100%;
+  }
+}
+@keyframes gradientReverse {
+  0% {
+    background-position: 100%;
+  }
+  100% {
+    background-position: 0%;
+  }
+}
+
+@keyframes neon {
+  0% {
+    filter: drop-shadow(0 0 0.05rem black);
+  }
+  25% {
+    filter: drop-shadow(0 0 0.13rem  black);
+  }
+  50% {
+    filter: drop-shadow(0 0 0.05rem black);
+  }
+  75% {
+    filter: drop-shadow(0 0 0.08rem black);
+  }
+  100% {
+    filter: drop-shadow(0 0 0.05rem black);
+  }
+}
