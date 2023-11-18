@@ -52,3 +52,25 @@
     filter: drop-shadow(0 0 0.05rem black);
   }
 }
+
+@keyframes fillAnimation {
+  from {
+    background-size: 0% 100%;
+  }
+  to {
+    background-size: 200% 100%;
+  }
+}
+
+.left {
+  animation: fillAnimation 0.5s ease-in-out forwards;
+  background: linear-gradient(to right, blue 50%, transparent 50%);
+  background-size: 0% 100%;
+  background-position: left;
+}
+.right {
+  animation: fillAnimation 0.5s ease-in-out forwards;
+  background: linear-gradient(to right, blue 50%, transparent 50%);
+  background-size: 0% 100%;
+  background-position: right;
+}

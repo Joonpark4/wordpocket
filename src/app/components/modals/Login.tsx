@@ -1,27 +1,30 @@
+'use client';
 import Link from 'next/link';
 import Label from '@/app/components/forms/Label';
 import Input from '@/app/components/forms/Input';
-import ModalTop from './ModalTop';
 import Image from 'next/image';
 import nextjs from '@/../public/img/nextjs-logotype-light-background.png';
 import BgPositionBtn from '../buttons/BgPositionBtn';
+import { useState } from 'react';
+import TwoTabBtn from '../buttons/TwoTabBtn';
 export default function Login() {
+  const [isLogin, setIsLogin] = useState(false);
   return (
     <div className="z-10 absolute flex justify-center items-center top-0 left-0 bg-gray-500 bg-opacity-40 w-full h-full">
       <div className="max-w-sm rounded-lg shadow-lg bg-white p-6 space-y-6 border border-gray-200 dark:border-gray-700 animate-fadeIn">
-        <ModalTop
-          title="Login"
-          subtitle='Welcome! Pls login to your account.'
-          text={
-            <>
-              You can check the&nbsp;
-              <Link className="text-blue-400 hover:text-blue-700" href="#">
-                privacy policy
-              </Link>
-              .
-            </>
-          }
-        />
+        <div className="space-y-2 text-center">
+          <TwoTabBtn tab1='Log-in' tab2='Sign-in' isFirstTab={isLogin} setIsFirstTab={setIsLogin} />
+          <h2 className="text-lg font-medium min-w-[300px]">
+            {isLogin ? "Welcome! Pls login to your account." : "Thank you for joining us!"}
+          </h2>
+          <p className="text-zinc-500 dark:text-zinc-400">
+            You can check the&nbsp;
+            <Link className="text-blue-400 hover:text-blue-700" href="#">
+              privacy policy
+            </Link>
+            .
+          </p>
+        </div>
         <div className="space-y-4">
           <div className="flex">
             <div className="flex flex-col grow">

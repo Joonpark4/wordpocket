@@ -26,3 +26,7 @@ body {
     )
     rgb(var(--background-start-rgb)); */
 }
+/* 모바일 환경에서 잔상 남기지 않기 */
+:focus {
+    outline: 2px solid #4285F4;
+}
