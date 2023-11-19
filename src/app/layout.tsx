@@ -6,7 +6,7 @@ import Footer from './components/layouts/Footer';
 
 export const metadata: Metadata = {
   title: 'Word Pocket',
-  description: 'A simple word pocket for you to save your words.',
+  description: 'Wordpocket: An English-Korean Vocabulary Memorization App powered by Next.js',
 };
 
 export default function RootLayout({
